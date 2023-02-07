@@ -1,0 +1,129 @@
+<div class="col-md-12">
+    <div style="text-align: center;">
+        <h1>Compras</h1>
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal"
+        [routerLink]="['/dashboard/compras/compcompra']">Nueva compra</button>
+    <br><br>
+    <router-outlet></router-outlet>
+    <table class="table table-bordered table-hover bg-white" style="text-align: center;">
+        <thead>
+            <tr>
+                <th style="width: 10px;">ID</th>
+                <th>Fecha</th>
+                <th>Número de acta</th>
+                <th>Cantidad</th>
+                <th>Observación</th>
+                <th>Autoridad</th>
+                <th>Opciones
+
+                </th>
+
+
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of compras">
+                <td>
+                    {{i.id_compras}}
+                </td>
+                <td>
+                    {{i.fecha | date:"yyyy-MM-dd"}}
+                </td>
+                <td>
+                    {{i.numero_acta}}
+                </td>
+                <td>
+                    {{i.cantidad}}
+                </td>
+                <td>
+                    {{i.observacion}}
+                </td>
+                <td>
+                    {{i.autoridad}}
+                </td>
+                <td class="d-flex justify-content-center">
+
+                    <a class="btn btn-success" data-toggle="modal" data-target="#editarPedido"
+                        (click)="getDataCompras(i.id_compras,i.fecha,i.numero_acta,i.cantidad, i.observacion, i.autoridad)">
+                        <i class="fas fa-edit"></i>
+                    </a>
+
+                    <div class="modal fade" id="editarPedido" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Compra</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="formEditCompras">
+                                        <div class="select">
+                                            <select name="format" id="format" formControlName="fk_tbl_autoridades_id">
+                                                <option *ngFor="let c of autoridades" [value]="c.id">{{c.nombre +' '+
+                                                    c.apellido}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                        <div class="alert__danger"
+                                            *ngIf="fk_tbl_autoridades_idd.invalid && (fk_tbl_autoridades_idd.dirty ||  fk_tbl_autoridades_idd.touched)">
+                                            <div class="container-error-message">
+                                                Seleccione una autoridad
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <input type="date" [ngModel]='fe | date:"yyyy-MM-dd" '
+                                                (ngModelChange)='fe=$event' name="Nombre Ingrediente"
+                                                formControlName="fecha" placeholder="asadda" class="form-control">
+
+
+                                            <div class="alert__danger"
+                                                *ngIf="fechas.invalid && (fechas.dirty ||  fechas.touched)">
+                                                <div class="container-error-message">
+                                                    La fecha es requerida
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <input type="number" name="Nombre Ingrediente" formControlName="cantidad"
+                                                class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="cantidadd.invalid && (cantidadd.dirty ||  cantidadd.touched)">
+                                                <div class="container-error-message">
+                                                    La cantidad es requerida
+                                                </div>
+                                            </div> <br>
+                                            <input type="text" name="Nombre Ingrediente" formControlName="numero_acta"
+                                                class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="numero_actaa.invalid && (numero_actaa.dirty ||  numero_actaa.touched)">
+                                                <div class="container-error-message">
+                                                    El número de acta es requerida
+                                                </div>
+                                            </div> <br>
+                                            <input type="text" name="Nombre Ingrediente" formControlName="observacion"
+                                                class="form-control"> <br>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary"
+                                                (click)="updateCompras(formEditCompras.value)"
+                                                data-dismiss="modal">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

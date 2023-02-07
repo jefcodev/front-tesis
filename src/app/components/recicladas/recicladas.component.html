@@ -1,0 +1,128 @@
+<div class="col-md-12">
+    <div style="text-align: center;">
+        <h1>Recicladas</h1>
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal"
+        [routerLink]="['/dashboard/recicladas/comprecicladas']">Nuevo reciclada</button>
+    <br><br>
+
+    <router-outlet></router-outlet><br>
+    <br><br>
+    <table class="table table-bordered table-hover bg-white" style="text-align: center;">
+        <thead>
+            <tr>
+                <th style="width: 10px;">ID</th>
+                <th>Fecha</th>
+                <th>Número de acta</th>
+                <th>Cantidad</th>
+                <th>Observación</th>
+                <th>Autoridad</th>
+                <th>Opciones</th>
+
+
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of recicladas">
+                <td>
+                    {{i.id}}
+                </td>
+                <td>
+                    {{i.fecha| date:"yyyy-MM-dd"}}
+                </td>
+                <td>
+                    {{i.numero_acta}}
+                </td>
+                <td>
+                    {{i.cantidad}}
+                </td>
+                <td>
+                    {{i.observacion}}
+                </td>
+                <td>
+                    {{i.autoridad}}
+                </td>
+                <td class="d-flex justify-content-center">
+                    <a class="btn btn-success" data-toggle="modal" data-target="#editarPedido" (click)="getDataReciclados(i.id,i.fecha,i.cantidad,
+                        i.numero_acta,i.observacion,i.autoridad)">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <div class="modal fade" id="editarPedido" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Despacho</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="formRecicladas">
+
+                                        <div class="select">
+                                            <select name="format" id="format" formControlName="fk_tbl_autoridades_id">
+                                                <option *ngFor="let c of autoridades" [value]="c.id">{{c.nombre +'
+                                                    '+c.apellido}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                        <div class="alert__danger"
+                                            *ngIf="fk_tbl_autoridades_id.invalid && (fk_tbl_autoridades_id.dirty ||  fk_tbl_autoridades_id.touched)">
+                                            <div class="container-error-message">
+                                                Seleccione una autoridad
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <input type="date" [ngModel]='fecha | date:"yyyy-MM-dd" '
+                                            (ngModelChange)='fecha=$event' name="Nombre Ingrediente"
+                                            formControlName="fecha" placeholder="asadda" class="form-control">
+                                        <div class="alert__danger"
+                                            *ngIf="fechau.invalid && (fechau.dirty ||  fechau.touched)">
+                                            <div class="container-error-message">
+                                                La fecha es requerida
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                        <div class="form-group">
+
+                                            <input type="number" formControlName="cantidad" class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="cantidad.invalid && (cantidad.dirty ||  cantidad.touched)">
+                                                <div class="container-error-message">
+                                                    La cantidad es requerida
+                                                </div>
+                                            </div><br>
+                                            <input type="number" formControlName="numero_acta" placeholder=""
+                                                class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="numero_acta.invalid && (numero_acta.dirty ||  numero_acta.touched)">
+                                                <div class="container-error-message">
+                                                    El número de acta es requerida
+                                                </div>
+                                            </div><br>
+
+                                            <input type="text" formControlName="observacion" class="form-control"> <br>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary"
+                                                (click)="updateReciclados(formRecicladas.value)"
+                                                data-dismiss="modal">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>

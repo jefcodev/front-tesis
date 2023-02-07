@@ -1,0 +1,100 @@
+<div class="container__main">
+    <form [formGroup]="formDespacho">
+        <div class="container__title__object">
+            <h4>Datos Cliente</h4>
+        </div>
+        <div class="container__data__object">
+            <div class="container__data__object__item">
+                <div class="select">
+                    <select name="format" id="format" formControlName="fk_tbl_cliente_cedula">
+                        <option *ngFor="let c of clientes" [value]="c.cedula">{{c.nombre +' '+c.apellido}}
+                        </option>
+                    </select>
+
+                </div>
+                <div class="alert__danger"
+                    *ngIf="fk_tbl_cliente_cedula.invalid && (fk_tbl_cliente_cedula.dirty ||  fk_tbl_cliente_cedula.touched)">
+                    <div class="container-error-message">
+                        Seleccione el cliente
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="container__title__object">
+            <h4>Datos Ayudante</h4>
+        </div>
+        <div class="container__data__object">
+            <div class="container__data__object__item">
+                <div class="select">
+                    <select name="format" id="format" formControlName="fk_tbl_guardia_cedula">
+                        <option *ngFor="let c of guardias" [value]="c.cedula">{{c.nombre +' '+c.apellido}}
+                        </option>
+                    </select>
+                </div>
+                <div class="alert__danger"
+                    *ngIf="fk_tbl_guardia_cedula.invalid && (fk_tbl_guardia_cedula.dirty ||  fk_tbl_guardia_cedula.touched)">
+                    <div class="container-error-message">
+                        Seleccione el aydudante
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <br>
+        <div class="container__title__object2">
+            <h4>Datos Pedido</h4>
+        </div>
+
+        <div class="container__body__object">
+            <div class="container__body__general">
+                <div class="container__body__item">
+                    <label for="tentacles"> Cantidad en libras:</label>
+                    <input formControlName="cantidad_libras" type="number" id="tentacles" name="tentacles">
+                    <div class="alert__danger"
+                        *ngIf="cantidad_libras.invalid && (cantidad_libras.dirty ||  cantidad_libras.touched)">
+                        <div class="container-error-message">
+                            La cantidad es requerida
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container__body__item">
+                    <label for="tentacles"> Número de huacales:</label>
+                    <input formControlName="numero_tinas" type="number" id="tentacles" name="tentacles">
+                    <div class="alert__danger"
+                        *ngIf="numero_tinas.invalid && (numero_tinas.dirty ||  numero_tinas.touched)">
+                        <div class="container-error-message">
+                            El número de huacales es requerida
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container__body__general">
+                <div class="container__body__item">
+                    <label for="tentacles">Ruta:</label>
+                    <input formControlName="ruta" type="text" id="tentacles" name="tentacles">
+                    <div class="alert__danger" *ngIf="ruta.invalid && (ruta.dirty ||  ruta.touched)">
+                        <div class="container-error-message">
+                            La ruta es requerida
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container__body__item">
+                    <label for="tentacles"> Observaciones:</label>
+                    <input formControlName="observasiones" type="text" id="tentacles" name="tentacles">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container__tutton">
+            <button type="button" style="margin-right: 20px;" class="btn btn-primary"
+                (click)="createDespacho(formDespacho.value)">Guardar</button>
+            <button type="button" class="btn btn-primary" [routerLink]="['/dashboard/despacho']">Cancelar</button>
+
+        </div>
+    </form>
+</div>

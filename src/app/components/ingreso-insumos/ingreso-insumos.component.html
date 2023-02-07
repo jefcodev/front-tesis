@@ -1,0 +1,123 @@
+<div class="col-md-12">
+    <div style="text-align: center;">
+        <h1>Insumos</h1>
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal"
+        [routerLink]="['/dashboard/insumo/compinsumo']">Nuevo insumo</button>
+    <br><br>
+    <router-outlet></router-outlet><br>
+    <table class="table table-bordered table-hover bg-white" style="text-align: center;">
+        <thead>
+            <tr>
+                <th style="width: 10px;">ID</th>
+                <th>Fecha ingreso</th>
+                <th>Fecha salida</th>
+                <th>Cantidad</th>
+                <th>Observaciones</th>
+
+                <th>Ayudante</th>
+                <th>Opciones</th>
+
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of insumos">
+                <td>
+                    {{i.id_insumos}}
+                </td>
+                <td>
+                    {{i.fecha_ingreso | date:"yyyy-MM-dd"}}
+                </td>
+                <td>
+                    {{i.fecha_salida | date:"yyyy-MM-dd"}}
+                </td>
+                <td>
+                    {{i.cantidad_libras}}
+                </td>
+
+                <td>
+                    {{i.observasiones}}
+                </td>
+
+                <td>
+                    {{i.guardia}}
+                </td>
+                <td class="d-flex justify-content-center">
+                    <a class="btn btn-success" data-toggle="modal" data-target="#editarPedido"
+                        (click)="getDataInsumo(i.id_insumos,i.fecha_ingreso,i.fecha_salida,i.cantidad_libras,i.observasiones,i.guardia)">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <div class="modal fade" id="editarPedido" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Insumo</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="formEditInsumo">
+
+                                        <div class="select">
+                                            <select name="format" id="format" formControlName="fk_tbl_guardia_cedula">
+                                                <option *ngFor="let c of guardias" [value]="c.cedula">{{c.nombre +'
+                                                    '+c.apellido}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                        <div class="alert__danger"
+                                            *ngIf="fk_tbl_guardia_cedula.invalid && (fk_tbl_guardia_cedula.dirty ||  fk_tbl_guardia_cedula.touched)">
+                                            <div class="container-error-message">
+                                                Seleccione el guardia
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <input type="date" [ngModel]='fecha_salida | date:"yyyy-MM-dd" '
+                                            (ngModelChange)='fecha_salida=$event' name="Nombre Ingrediente"
+                                            formControlName="fecha_salida" placeholder="asadda" class="form-control">
+                                        <div class="alert__danger"
+                                            *ngIf="fecha_salid.invalid && (fecha_salid.dirty ||  fecha_salid.touched)">
+                                            <div class="container-error-message">
+                                                La fecha de salida es requerida
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+
+                                            <input type="number" formControlName="cantidad_libras" class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="cantidad_libras.invalid && (cantidad_libras.dirty ||  cantidad_libras.touched)">
+                                                <div class="container-error-message">
+                                                    La cantidad es requerida
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <input type="text" formControlName="observasiones" placeholder=""
+                                                class="form-control"> <br>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary"
+                                                (click)="updateInsumos(formEditInsumo.value)"
+                                                data-dismiss="modal">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+
+            </tr>
+        </tbody>
+    </table>
+</div>

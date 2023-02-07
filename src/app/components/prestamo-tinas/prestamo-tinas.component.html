@@ -1,0 +1,128 @@
+<div class="col-md-12">
+    <div style="text-align: center;">
+        <h1>Préstamo de huacales</h1>
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal"
+        [routerLink]="['/dashboard/prestamo/compprestamo']">Nuevo préstamo</button>
+    <br><br>
+    <router-outlet></router-outlet><br>
+    <table class="table table-bordered table-hover bg-white" style="text-align: center;">
+        <thead>
+            <tr>
+                <th style="width: 10px;">ID</th>
+                <th>Fecha préstamo</th>
+                <th>Fecha entrega</th>
+
+                <th>Número de huacales</th>
+
+                <th>Observación</th>
+                <th>Número de acta</th>
+                <th>Cliente</th>
+
+                <th>Opciones</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of prestamoTinas">
+                <td>
+                    {{i.id_prestamo_tinas}}
+                </td>
+                <td>
+                    {{i.fecha_prestamo | date:"yyyy-MM-dd"}}
+                </td>
+                <td>
+                    {{i.fecha_entrega | date:"yyyy-MM-dd"}}
+                </td>
+                <td>
+                    {{i.numero_tinas}}
+                </td>
+
+                <td>
+                    {{i.observasiones}}
+                </td>
+                <td>
+                    {{i.numero_acta}}
+                </td>
+                <td>
+                    {{i.cliente}}
+                </td>
+                <td class="d-flex justify-content-center">
+                    <a class="btn btn-success" data-toggle="modal" data-target="#editarPedido"
+                        (click)="getDataPrestamos(i.id_prestamo_tinas,i.fecha_prestamo,i.fecha_entrega,i.numero_tinas,i.observasiones,i.numero_acta,i.cliente)">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <div class="modal fade" id="editarPedido" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Préstamo</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="formPrestamoTinas">
+                                        <div class="select">
+                                            <select name="format" id="format" formControlName="fk_tbl_cliente_cedula">
+                                                <option *ngFor="let c of clientes" [value]="c.cedula">{{c.nombre +'
+                                                    '+c.apellido}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                        <div class="alert__danger"
+                                            *ngIf="fk_tbl_cliente_cedula.invalid && (fk_tbl_cliente_cedula.dirty ||  fk_tbl_cliente_cedula.touched)">
+                                            <div class="container-error-message">
+                                                Seleccione el cliente
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <input type="date" [ngModel]='fecha | date:"yyyy-MM-dd" '
+                                                (ngModelChange)='fecha=$event' formControlName="fecha_entrega"
+                                                class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="fecha_entrega.invalid && (fecha_entrega.dirty ||  fecha_entrega.touched)">
+                                                <div class="container-error-message">
+                                                    La fecha de entrega es requerida
+                                                </div>
+                                            </div><br>
+                                            <input type="number" formControlName="numero_tinas" class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="numero_tinas.invalid && (numero_tinas.dirty ||  numero_tinas.touched)">
+                                                <div class="container-error-message">
+                                                    El número de huacales es requerida
+                                                </div>
+                                            </div> <br>
+                                            <input type="text" formControlName="numero_acta" class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="numero_acta.invalid && (numero_acta.dirty ||  numero_acta.touched)">
+                                                <div class="container-error-message">
+                                                    El número de acta es requerido
+                                                </div>
+                                            </div> <br>
+                                            <input type="text" formControlName="observasiones" class="form-control">
+                                            <br>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary"
+                                                (click)="updatePrestamos(formPrestamoTinas.value)"
+                                                data-dismiss="modal">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+
+            </tr>
+        </tbody>
+    </table>
+</div>

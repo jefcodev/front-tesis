@@ -1,0 +1,142 @@
+<div class="col-md-12">
+    <div style="text-align: center;">
+        <h1>Autoridades</h1>
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearCliente">Nueva
+        Autoridad</button>
+    <br><br>
+    <table class="table table-bordered table-hover bg-white" style="text-align: center;">
+        <thead>
+            <tr>
+                <th style="width: 10px;">ID</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of autoridades">
+                <td>
+                    {{i.id}}
+                </td>
+                <td>
+                    {{i.nombre}}
+                </td>
+                <td>
+                    {{i.apellido}}
+                </td>
+
+
+                <td class="d-flex justify-content-center">
+
+                    <a class="btn btn-success" data-toggle="modal" data-target="#editarGuards"
+                        (click)="getDataAutoridades(i.id,i.nombre,i.apellido)">
+                        <i class="fas fa-edit"></i>
+                    </a>
+
+
+                    <div class="modal fade" id="editarGuards" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Ingrediente</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="nAutoridadForm">
+                                        <div class="form-group">
+
+                                            <input type="text" formControlName="nombre" class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="nombree.invalid && (nombree.dirty || nombree.touched)">
+                                                <div class="container-error-message">
+                                                    Sus nombres son requeridos
+                                                </div>
+                                            </div><br>
+                                            <input type="text" formControlName="apellido" class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="apellidoo.invalid && (apellidoo.dirty || apellidoo.touched)">
+                                                <div class="container-error-message">
+                                                    Sus apellidos son requeridos
+                                                </div>
+                                            </div><br>
+
+
+
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary"
+                                                (click)="updateAutoridades(nAutoridadForm.value)"
+                                                data-dismiss="modal">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- +++++++++++ MODEL CREAR UN Guardia +++++++++ -->
+<div class="modal fade" id="crearCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nueva Autoridad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="AutoridadForm">
+                    <div class="form-group">
+
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="Nombres Completos" formControlName="nombre"
+                            placeholder="Ingrese sus nombres" class="form-control">
+                        <div class="alert__danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                            <div class="container-error-message">
+                                Sus nombres son requeridos
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="Nombres Completos" formControlName="apellido"
+                            placeholder="Ingrese sus apelldios" class="form-control">
+                        <div class="alert__danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+                            <div class="container-error-message">
+                                Sus apellidos son requeridos
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            (click)="crearAutoridades(AutoridadForm.value)">Crear</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

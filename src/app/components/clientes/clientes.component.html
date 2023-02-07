@@ -1,0 +1,214 @@
+<div class="col-md-12">
+    <div style="text-align: center;">
+        <h1>Clientes</h1>
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearCliente">Nuevo Cliente</button>
+    <br><br>
+    <table class="table table-bordered table-hover bg-white" style="text-align: center;">
+        <thead>
+            <tr>
+                <th style="width: 10px;">Cédula</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Ciudad</th>
+                <th>Teléfono</th>
+                <th>Opciones</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of clientes">
+                <td>
+                    {{i.cedula}}
+                </td>
+                <td>
+                    {{i.nombre}}
+                </td>
+                <td>
+                    {{i.apellido}}
+                </td>
+                <td>
+                    {{i.ciudad}}
+                </td>
+                <td>
+                    {{i.telefono}}
+                </td>
+                <td class="d-flex justify-content-center">
+
+                    <a class="btn btn-success" data-toggle="modal" data-target="#editarIngredients"
+                        (click)="getDataClient(i.cedula,i.nombre,i.apellido,i.ciudad,i.telefono)">
+                        <i class="fas fa-edit"></i>
+                    </a>
+
+
+                    <div class="modal fade" id="editarIngredients" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Ingrediente</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="nClienteFormA">
+                                        <div class="form-group">
+                                            <label>
+                                                {{cedulaAux}}
+                                            </label>
+                                            <input type="text" name="Nombre Ingrediente" formControlName="nombre"
+                                                class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="nombree.invalid && (nombree.dirty || nombree.touched)">
+                                                <div class="container-error-message">
+                                                    Sus nombres son requeridos
+                                                </div>
+                                            </div> <br>
+                                            <input type="text" formControlName="apellido" class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="apellidoo.invalid && (apellidoo.dirty || apellidoo.touched)">
+                                                <div class="container-error-message">
+                                                    Sus apellidos son requeridos
+                                                </div>
+                                            </div> <br>
+                                            <input type="text" formControlName="ciudad" class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="ciudadd.invalid && (ciudadd.dirty || ciudadd.touched)">
+                                                <div class="container-error-message">
+                                                    Su ciudad es requerida
+                                                </div>
+                                            </div><br>
+                                            <input type="text" formControlName="telefono" class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="telefonoo.invalid && (telefonoo.dirty || telefonoo.touched)">
+                                                <div class="container-error-message"
+                                                    *ngIf="telefono?.errors?.['required']">
+                                                    Su teléfono es requerido
+                                                </div>
+                                                <div class="container-error-message"
+                                                    *ngIf="telefonoo?.errors?.['minlength']">
+                                                    Su teléfono debe contener 10 digitos
+                                                </div>
+                                                <div class="container-error-message"
+                                                    *ngIf="telefonoo?.errors?.['maxlength']">
+                                                    Su teléfono es superior a los 10 digitos
+                                                </div>
+                                                <div class="container-error-message"
+                                                    *ngIf="telefonoo?.errors?.['pattern']">
+                                                    Ingrese teléfono válido
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary"
+                                                (click)="updateClient(nClienteFormA.value)"
+                                                data-dismiss="modal">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<!-- +++++++++++ MODEL CREAR UN CLIENTE +++++++++ -->
+<div class="modal fade" id="crearCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="nClienteForm">
+                    <div class="form-group">
+                        <input type="text" formControlName="cedula" placeholder="Ingrese su cédula"
+                            class="form-control">
+                        <div class="alert__danger" *ngIf="cedula.invalid && (cedula.dirty || cedula.touched)">
+                            <div class="container-error-message" *ngIf="cedula?.errors?.['required']">
+                                La cédula es requerida
+                            </div>
+                            <div class="container-error-message" *ngIf="cedula?.errors?.['minlength']">
+                                Su cédula debe contener 10 digitos
+                            </div>
+                            <div class="container-error-message" *ngIf="cedula?.errors?.['maxlength']">
+                                Su cédula es superior a los 10 digitos
+                            </div>
+                            <div class="container-error-message" *ngIf="cedula?.errors?.['pattern']">
+                                Ingrese cédula válido
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" formControlName="nombre" placeholder="Ingrese sus nombres"
+                            class="form-control">
+                        <div class="alert__danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                            <div class="container-error-message">
+                                Sus nombres son requeridos
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="Nombres Completos" formControlName="apellido"
+                            placeholder="Ingrese sus apelldios" class="form-control">
+                        <div class="alert__danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+                            <div class="container-error-message">
+                                Sus apellidos son requeridos
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="Ciuadd" formControlName="ciudad" placeholder="Ingrese su ciudad"
+                            class="form-control">
+                        <div class="alert__danger" *ngIf="ciudad.invalid && (ciudad.dirty || ciudad.touched)">
+                            <div class="container-error-message">
+                                Su ciudad es requerida
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="Telefono" formControlName="telefono"
+                            placeholder="Ingrese su teléfono celular" class="form-control">
+                        <div class="alert__danger" *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)">
+                            <div class="container-error-message" *ngIf="telefono?.errors?.['required']">
+                                Su teléfono es requerido
+                            </div>
+                            <div class="container-error-message" *ngIf="telefono?.errors?.['minlength']">
+                                Su teléfono debe contener 10 digitos
+                            </div>
+                            <div class="container-error-message" *ngIf="telefono?.errors?.['maxlength']">
+                                Su teléfono es superior a los 10 digitos
+                            </div>
+                            <div class="container-error-message" *ngIf="telefono?.errors?.['pattern']">
+                                Ingrese teléfono válido
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            (click)="crearClient(nClienteForm.value)">Crear</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edutar Clkeint -->

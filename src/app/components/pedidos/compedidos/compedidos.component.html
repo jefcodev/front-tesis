@@ -1,0 +1,83 @@
+<div class="container__main">
+    <form [formGroup]="formPedido">
+        <div class="container__title__object">
+            <h4>Datos clientes</h4>
+        </div>
+        <div class="container__data__object">
+            <div class="container__data__object__item">
+                <div class="select">
+                    <select name="format" id="format" formControlName="fk_tbl_cliente_cedula">
+                        <option *ngFor="let c of clientes" [value]="c.cedula">{{c.nombre +' '+c.apellido}}
+                        </option>
+                    </select>
+
+                </div>
+                <div class="alert__danger"
+                    *ngIf="fk_tbl_cliente_cedula.invalid && (fk_tbl_cliente_cedula.dirty || fk_tbl_cliente_cedula.touched)">
+                    <div class="container-error-message">
+                        Seleccione el cliente
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <br>
+        <div class="container__title__object2">
+            <h4>Datos Pedido</h4>
+        </div>
+        <div class="container__body__object">
+            <div class="container__body__general">
+                <div class="container__body__item">
+                    <label for="start">Fecha de entrega: </label>
+                    <input formControlName="fecha_entrega" type="date" id="start" name="trip-start">
+                    <div class="alert__danger"
+                        *ngIf="fecha_entrega.invalid && (fecha_entrega.dirty || fecha_entrega.touched)">
+                        <div class="container-error-message">
+                            La fecha de entrega es requerida
+                        </div>
+                    </div>
+                </div>
+                <div class="container__body__item">
+                    <label for="tentacles"> Cantidad en libras:</label>
+                    <input formControlName="cantidad_libras" type="number" id="tentacles" name="tentacles">
+                    <div class="alert__danger"
+                        *ngIf="cantidad_libras.invalid && (cantidad_libras.dirty || cantidad_libras.touched)">
+                        <div class="container-error-message">
+                            La cantidad es necesaria
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container__body__general">
+                <div class="container__body__item">
+                    <label for="tentacles">Ruta:</label>
+                    <input formControlName="ruta" type="text" id="tentacles" name="tentacles">
+                    <div class="alert__danger" *ngIf="ruta.invalid && (ruta.dirty || ruta.touched)">
+                        <div class="container-error-message">
+                            La ruta es necesaria
+                        </div>
+                    </div>
+                </div>
+                <div class="container__body__item">
+
+                    <label for="tentacles"> Observaciones:</label>
+                    <input formControlName="observasiones" type="text" id="tentacles" name="tentacles">
+                    <div class="alert__danger"
+                        *ngIf="observasiones.invalid && (observasiones.dirty || observasiones.touched)">
+                        <div class="container-error-message">
+                            Las observasiones son necesarias
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container__tutton">
+            <button type="button" style="margin-right: 20px;" class="btn btn-primary"
+                (click)="createPedido(formPedido.value)">Guardar</button>
+            <button type="button" class="btn btn-primary" [routerLink]="['/dashboard/pedido']">Cancelar</button>
+
+        </div>
+    </form>
+</div>

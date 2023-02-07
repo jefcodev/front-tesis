@@ -1,0 +1,86 @@
+<div class="container__main">
+    <form [formGroup]="formCompra">
+        <div class="container__title__object">
+            <h4 >Datos Autoridades</h4>
+        </div>
+
+        <div class="container__data__object">
+            <div class="container__data__object__item">
+                <div class="select">
+                    <select name="format" id="format" formControlName="fk_tbl_autoridades_id">
+                        <option *ngFor="let c of autoridades" [value]="c.id">{{c.nombre +' '+c.apellido}}
+                        </option>
+                    </select>
+
+
+                </div>
+                <div class="alert__danger"
+                    *ngIf="fk_tbl_autoridades_id.invalid && (fk_tbl_autoridades_id.dirty ||  fk_tbl_autoridades_id.touched)">
+                    <div class="container-error-message">
+                        Seleccione una autoridad
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <br>
+        <div class="container__title__object2">
+            <h4>Datos Compra</h4>
+        </div>
+        <div class="container__body__object">
+            <div class="container__body__general">
+                <div class="container__body__item">
+                    <label for="start">Fecha: </label>
+                    <input formControlName="fecha" type="date" id="start" name="trip-start">
+                    <div class="alert__danger" *ngIf="fecha.invalid && (fecha.dirty ||  fecha.touched)">
+                        <div class="container-error-message">
+                            La fecha es requerida
+                        </div>
+                    </div>
+                </div>
+                <div class="container__body__item">
+                    <label for="tentacles"> Cantidad:</label>
+                    <input formControlName="cantidad" type="number" id="tentacles" name="tentacles">
+                    <div class="alert__danger" *ngIf="cantidad.invalid && (cantidad.dirty ||  cantidad.touched)">
+                        <div class="container-error-message">
+                            La cantidad es requerida
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="container__body__general">
+                <div class="container__body__item">
+                    <label for="tentacles">Número de acta:</label>
+                    <input formControlName="numero_acta" type="text" id="tentacles" name="tentacles">
+                    <div class="alert__danger"
+                        *ngIf="numero_acta.invalid && (numero_acta.dirty ||  numero_acta.touched)">
+                        <div class="container-error-message">
+                            El número de acta es requerida
+                        </div>
+                    </div>
+                </div>
+                <div class="container__body__item">
+                    <label for="tentacles"> Observaciones:</label>
+                    <input formControlName="observacion" type="text" id="tentacles" name="tentacles">
+
+                </div>
+            </div>
+
+
+        </div>
+        <br>
+    
+        <div class="container__tutton">
+
+            <button type="button" style="margin-right: 20px;" class="btn btn-primary"
+                (click)="createCompra(formCompra.value)">Guardar</button>
+            <button type="button" class="btn btn-primary" [routerLink]="['/dashboard/compras']">Cancelar</button>
+
+        </div>
+    </form>
+</div>
+
+<br>

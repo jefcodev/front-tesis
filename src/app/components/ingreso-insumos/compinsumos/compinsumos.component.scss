@@ -1,0 +1,149 @@
+select {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   -ms-appearance: none;
+   appearance: none;
+   outline: 0;
+   box-shadow: none;
+   border: 0 !important;
+   background: #5c6664;
+   background-image: none;
+   flex: 1;
+   padding: 0 .5em;
+   color: #fff;
+   cursor: pointer;
+   font-size: 1em;
+   font-family: 'Open Sans', sans-serif;
+
+}
+
+select::-ms-expand {
+   display: none;
+}
+
+.select {
+   position: relative;
+   display: flex;
+   width: 31em;
+   height: 3em;
+   line-height: 3;
+   overflow: hidden;
+   border-radius: .25em;
+
+
+}
+
+.select::after {
+   content: '\25BC';
+   position: absolute;
+   top: 0;
+   right: 0;
+   padding: 0 1em;
+   background: #979a9a;
+   cursor: pointer;
+   pointer-events: none;
+   transition: .25s all ease;
+}
+
+.select:hover::after {
+   color: #5d5a5a;
+}
+
+
+.container__main {
+    // // background: red;
+    padding: 10px;
+    border: solid 1px;
+    border-radius: 10px;
+    width: auto;
+    height: auto;
+
+    // padding-right: 70px;
+    margin-left: 100px;
+    margin-right: 100px;
+    max-width: auto;
+    min-width: 1000px;
+    // box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+   
+   
+}
+
+.container__title__object {
+   // background-color: yellow;
+   text-align: center;
+   width: auto;
+}
+
+.container__data__object {
+   // background: blue;
+   // display: inline-block;
+   // justify-content: center;
+   display: flex;
+   justify-content: center;
+   text-align: center;
+
+   text-align: center;
+   height: auto;
+   margin: 0 auto;
+}
+
+.container__data__object__item {
+
+   display: inline-block;
+}
+
+.container__title__object2 {
+   // background: red;
+   text-align: center;
+}
+
+.container__body__object {
+   // background: yellow;
+   display: flex;
+
+    justify-content: center;
+   // flex-wrap: wrap;
+   text-align: center;
+   width: 100%;
+   height: auto;
+
+}
+
+.container__body__item {
+   // background: red;
+   display: inline-block;
+   // margin-left: 30px;
+   text-align: center;
+   margin-right: 20px;
+   margin-left: 20px;
+
+}
+
+.container__tutton {
+   // background: blue;
+   display: flex;
+   justify-content: center;
+   width: auto;
+}
+
+input,
+label {
+   display: block;
+   width: 300px;
+   // margin-right: 20px;
+   // margin-left: 20px;
+   // margin-top: 10px;
+}
+
+.alert__danger {
+   color: #721c24;
+   background: #f8d7da;
+   border-color: #f5c6cb;
+   margin-bottom: 5px;
+  
+}
+
+.container-error-message {
+   padding: 3px;
+  
+}

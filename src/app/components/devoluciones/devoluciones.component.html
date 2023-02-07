@@ -1,0 +1,173 @@
+<div class="col-md-12">
+    <div style="text-align: center;">
+        <h1>Devoluciones</h1>
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearCliente">Nueva
+        devolución</button>
+    <br><br>
+    <table class="table table-bordered table-hover bg-white" style="text-align: center;">
+        <thead>
+            <tr>
+                <th style="width: 10px;">ID</th>
+                <th>Cantidad</th>
+                <th>Observación</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Opciones</th>
+
+
+
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of devoluciones">
+                <td>
+                    {{i.id}}
+                </td>
+                <td>
+                    {{i.cantidad}}
+                </td>
+                <td>
+                    {{i.observacion}}
+                </td>
+                <td>
+                    {{i.fecha| date:"yyyy-MM-dd"}}
+                </td>
+                <td>
+                    {{i.cliente}}
+                </td>
+                <td class="d-flex justify-content-center">
+
+                    <a class="btn btn-success" data-toggle="modal" data-target="#editarGuards"
+                        (click)="getDataDevoluciones(i.id,i.cantidad,i.observacion, i.fecha,i.cliente)">
+                        <i class="fas fa-edit"></i>
+                    </a>
+
+
+                    <div class="modal fade" id="editarGuards" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Devolución</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="formDevolucionUpdate">
+                                        <div class="select">
+                                            <select name="format" id="format"
+                                                formControlName="fk_tbl_prestamo_tinas_id">
+                                                <option *ngFor="let c of prestamos" [value]="c.id_prestamo_tinas">
+                                                    {{c.cliente}}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                        <div class="alert__danger"
+                                            *ngIf="fk_tbl_prestamo_tinas_idUpdate.invalid && (fk_tbl_prestamo_tinas_idUpdate.dirty ||  fk_tbl_prestamo_tinas_idUpdate.touched)">
+                                            <div class="container-error-message">
+                                                Seleccione el cliente del prestamo
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <!-- <input type="date" [ngModel]='fecha | date:"yyyy-MM-dd" '
+                                                (ngModelChange)='fecha=$event' 
+                                                formControlName="fecha" placeholder="asadda" class="form-control"> -->
+                                            <input type="text" formControlName="cantidad" class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="cantidadUpdate.invalid && (cantidadUpdate.dirty ||  cantidadUpdate.touched)">
+                                                <div class="container-error-message">
+                                                    La cantidad es requerida
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <input type="text" formControlName="observacion" class="form-control">
+                                            <br>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary"
+                                                (click)="updateAutoridades(formDevolucionUpdate.value)"
+                                                data-dismiss="modal">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </td>
+
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- +++++++++++ MODEL CREAR UN CLIENTE +++++++++ -->
+<div class="modal fade" id="crearCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nueva devolución</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formDevolucion">
+
+                    <div class="select">
+                        <select name="format" id="format" formControlName="fk_tbl_prestamo_tinas_id">
+                            <option *ngFor="let c of prestamos" [value]="c.id_prestamo_tinas">{{c.cliente}}
+                            </option>
+                        </select>
+
+                    </div>
+                    <div class="alert__danger"
+                        *ngIf="fk_tbl_prestamo_tinas_id.invalid && (fk_tbl_prestamo_tinas_id.dirty ||  fk_tbl_prestamo_tinas_id.touched)">
+                        <div class="container-error-message">
+                            Seleccione el cliente del prestamo
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <input type="number" formControlName="cantidad" placeholder="Ingrese la cantidad"
+                            class="form-control">
+                        <div class="alert__danger" *ngIf="cantidad.invalid && (cantidad.dirty ||  cantidad.touched)">
+                            <div class="container-error-message">
+                                La cantidad es requerida
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <input type="text" formControlName="observacion" placeholder="Ingrese alguna observación"
+                            class="form-control">
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            (click)="crearDevolucion(formDevolucion.value)">Crear</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edutar Clkeint -->

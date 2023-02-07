@@ -1,0 +1,33 @@
+<div class="col-md-12">
+    <div style="text-align: center;">
+        <h1>Tinas</h1>
+    </div>
+    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearCliente">Nueva
+        Tina</button> -->
+    <br><br>
+    <table class="table table-bordered table-hover bg-white" style="text-align: center;">
+        <thead>
+            <tr>
+                <th style="width: 10px;">ID</th>
+                <th>Nombres</th>
+                <th>Stock</th>
+
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of tinas">
+                <td>
+                    {{i.id}}
+                </td>
+                <td>
+                    {{i.nombre}}
+                </td>
+                <td>
+                    {{i.stock}}
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
