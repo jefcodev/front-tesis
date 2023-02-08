@@ -99,20 +99,20 @@ export class PrestamoTinasComponent implements OnInit {
 
         this.showAllPrestamo()
 
-        // this.formBitacora.setValue({
-        //   fecha_actual: new Date,
-        //   movimiento: "Prestamo",
-        //   accion: "Actualizar",
-        //   cantidad: "",
-        //   ayudante: "",
-        //   cliente: "1724694062",
-        //   observacion: "",
-        //   numero_acta: "",
-        //   usuario: "Admin",
-        // })
+        this.formBitacora.setValue({
+          fecha_actual: new Date,
+          movimiento: "Préstamo",
+          accion: "Actualizar",
+          cantidad: null,
+          ayudante: "",
+          cliente: form.fk_tbl_cliente_cedula,
+          observacion: "",
+          numero_acta: "",
+          usuario: "Admin",
+        })
 
-        // this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
-        // })
+        this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+        })
 
       })
     } else {

@@ -68,19 +68,19 @@ export class CompprestamoComponent implements OnInit {
         this.showModalMore('center', 'success', 'Prestamo registrado exitosamente', false, 2000);
 
         this.prestamoTinasComponent.showAllPrestamo()
-        // this.formBitacora.setValue({
-        //   fecha_actual: new Date,
-        //   movimiento: "Prestamo",
-        //   accion: "Actualizar",
-        //   cantidad: "",
-        //   ayudante: "",
-        //   cliente: "1724694062",
-        //   observacion: "",
-        //   numero_acta: "",
-        //   usuario: "Admin",
-        // })
-        // this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
-        // })
+        this.formBitacora.setValue({
+          fecha_actual: new Date,
+          movimiento: "Préstamo",
+          accion: "Crear",
+          cantidad: null,
+          ayudante: "",
+          cliente: form.fk_tbl_cliente_cedula,
+          observacion: "",
+          numero_acta: "",
+          usuario: "Admin",
+        })
+        this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+        })
 
       })
     } else {
