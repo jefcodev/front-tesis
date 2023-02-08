@@ -18,6 +18,12 @@ export class LoginService {
     let direccion = this.url + "login";
     return this.http.post(direccion, form);
   }
+  getUser(token: any) {
+    // alert(form)
+    let direccion = this.url + "user/" + token;
+    // alert(direccion)
+    return this.http.post(direccion, null);
+  }
   // updateAutoridad(form: any) {
   //   let direccion = this.url + "autoridades";
   //   return this.http.put(direccion, form);

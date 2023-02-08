@@ -7,6 +7,8 @@ import { ComprasService } from '../../../servicios/compras/compras.service';
 import { Router } from '@angular/router';
 import { ComprasComponent } from '../compras.component';
 import { KardexService } from '../../../servicios/kardex/kardex.service';
+import { LoginService } from '../../../servicios/login/login.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-compcompra',
@@ -14,7 +16,7 @@ import { KardexService } from '../../../servicios/kardex/kardex.service';
   styleUrls: ['./compcompra.component.scss']
 })
 export class CompcompraComponent implements OnInit {
-
+  userLo: string = "";
   autoridades: ModelAutoridadesI[] = [];
 
 
@@ -40,14 +42,20 @@ export class CompcompraComponent implements OnInit {
 
   });
 
-  constructor(private autoridadesServices: AutoridadesService, private comprasServices: ComprasService,
+  constructor(private loginService: LoginService, private cookieService: CookieService, private autoridadesServices: AutoridadesService, private comprasServices: ComprasService,
     private router: Router, private comprasComponent: ComprasComponent, private dexServices: KardexService) { }
 
   ngOnInit(): void {
     this.showAllAutoridades();
+    this.definirUser()
   }
 
-
+  definirUser() {
+    this.loginService.getUser(this.cookieService.get('tokenIC'))
+      .subscribe((data: any) => {
+        this.userLo = data.rol
+      });
+  }
   showAllAutoridades() {
     this.autoridadesServices.getAllAutoridades().subscribe(
       (autoridades: any) => {
@@ -64,6 +72,10 @@ export class CompcompraComponent implements OnInit {
         this.router.navigateByUrl("/dashboard/compras");
         this.showModalMore('center', 'success', 'Compra registrado exitosamente', false, 2000);
         this.comprasComponent.showAllCompras();
+
+        // this.loginService.getUser(this.cookieService.get('tokenIC'))
+        //   .subscribe((data: any) => {
+
         this.formBitacora.setValue({
           fecha_actual: new Date,
           movimiento: "Compra",
@@ -73,8 +85,13 @@ export class CompcompraComponent implements OnInit {
           cliente: "",
           observacion: form.observacion,
           numero_acta: form.numero_acta,
-          usuario: "Admin",
+          usuario: this.userLo
         })
+
+
+
+        // });
+        // console.log(this.formBitacora)
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
         })

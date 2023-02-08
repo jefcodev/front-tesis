@@ -8,6 +8,8 @@ import { PedidosComponent } from '../pedidos/pedidos.component';
 import Swal from 'sweetalert2';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { KardexService } from '../../../servicios/kardex/kardex.service';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from '../../../servicios/login/login.service';
 
 @Component({
   selector: 'app-compedidos',
@@ -30,7 +32,7 @@ export class CompedidosComponent implements OnInit {
   });
 
   clientes: ModelClientesI[] = [];
-  constructor(private clientesService: ClientesService, private pedidosService: PedidosService, private router: Router,
+  constructor(private loginService: LoginService, private cookieService: CookieService, private clientesService: ClientesService, private pedidosService: PedidosService, private router: Router,
     private pedidosComponent: PedidosComponent, private dexServices: KardexService) { }
 
   formPedido = new FormGroup({
@@ -45,6 +47,13 @@ export class CompedidosComponent implements OnInit {
 
   ngOnInit(): void {
     this.showAllClients();
+    this.definirUser();
+  }
+  userLo: string = ""; definirUser() {
+    this.loginService.getUser(this.cookieService.get('tokenIC'))
+      .subscribe((data: any) => {
+        this.userLo = data.rol
+      });
   }
   showAllClients() {
     this.clientesService.getAllClients().subscribe(
@@ -72,7 +81,7 @@ export class CompedidosComponent implements OnInit {
           cliente: form.fk_tbl_cliente_cedula,
           observacion: form.observasiones,
           numero_acta: "",
-          usuario: "Admin",
+          usuario: this.userLo,
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {

@@ -6,6 +6,8 @@ import { ClientesService } from '../../servicios/clientes/clientes.service';
 import { ModelClientesI } from '../../modelos/modelo.clientes';
 import Swal from 'sweetalert2';
 import { KardexService } from '../../servicios/kardex/kardex.service';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from '../../servicios/login/login.service';
 
 @Component({
   selector: 'app-prestamo-tinas',
@@ -47,13 +49,20 @@ export class PrestamoTinasComponent implements OnInit {
   })
 
 
-  constructor(private prestamoTinasService: PrestamoTinasService,
+  constructor(private loginService: LoginService, private cookieService: CookieService, private prestamoTinasService: PrestamoTinasService,
     private clientesService: ClientesService, private dexServices: KardexService) { }
 
   ngOnInit(): void {
     this.showAllPrestamo();
+    this.userLo
   }
-
+  userLo: string = "";
+  definirUser() {
+    this.loginService.getUser(this.cookieService.get('tokenIC'))
+      .subscribe((data: any) => {
+        this.userLo = data.rol
+      });
+  }
   showAllPrestamo() {
     this.prestamoTinasService.getAllPrestamos().subscribe(
       (prestamoTinas: any) => {
@@ -108,7 +117,7 @@ export class PrestamoTinasComponent implements OnInit {
           cliente: form.fk_tbl_cliente_cedula,
           observacion: "",
           numero_acta: "",
-          usuario: "Admin",
+          usuario: this.userLo,
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {

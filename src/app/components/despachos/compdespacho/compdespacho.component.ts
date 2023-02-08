@@ -10,6 +10,8 @@ import { DespachosService } from 'src/app/servicios/despachos/despachos.service'
 import { DespachosComponent } from '../despachos.component';
 import Swal from 'sweetalert2';
 import { KardexService } from '../../../servicios/kardex/kardex.service';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from '../../../servicios/login/login.service';
 
 @Component({
   selector: 'app-compdespacho',
@@ -51,7 +53,7 @@ export class CompdespachoComponent implements OnInit {
     fk_tbl_guardia_cedula: new FormControl('', [Validators.required])
   })
 
-  constructor(private clientesService: ClientesService,
+  constructor(private loginService: LoginService, private cookieService: CookieService, private clientesService: ClientesService,
     private guardiasservices: GuardiasService,
     private despachoServices: DespachosService,
     private router: Router,
@@ -60,8 +62,14 @@ export class CompdespachoComponent implements OnInit {
   ngOnInit(): void {
     this.showAllClients()
     this.showAllGuards();
+    this.definirUser()
   }
-
+  userLo: string = ""; definirUser() {
+    this.loginService.getUser(this.cookieService.get('tokenIC'))
+      .subscribe((data: any) => {
+        this.userLo = data.rol
+      });
+  }
   showAllClients() {
     this.clientesService.getAllClients().subscribe(
       (clientes: any) => {
@@ -101,7 +109,7 @@ export class CompdespachoComponent implements OnInit {
           cliente: form.fk_tbl_cliente_cedula,
           observacion: form.observasiones,
           numero_acta: "",
-          usuario: "Admin",
+          usuario: this.userLo,
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {

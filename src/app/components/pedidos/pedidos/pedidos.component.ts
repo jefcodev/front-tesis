@@ -7,6 +7,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { identifierName } from '@angular/compiler/public_api';
 import Swal from 'sweetalert2';
 import { KardexService } from '../../../servicios/kardex/kardex.service';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from '../../../servicios/login/login.service';
 
 
 @Component({
@@ -43,13 +45,21 @@ export class PedidosComponent implements OnInit {
   });
 
 
-  constructor(private pedidoServices: PedidosService,
+  constructor(private loginService: LoginService, private cookieService: CookieService, private pedidoServices: PedidosService,
     private clientesService: ClientesService, private dexServices: KardexService) { }
 
   ngOnInit(): void {
     this.showAllOrders();
     // this.showAllClients();
     // this.fecha="2000-03-20";
+    this.definirUser();
+  }
+   userLo: string = "";
+  definirUser() {
+    this.loginService.getUser(this.cookieService.get('tokenIC'))
+      .subscribe((data: any) => {
+        this.userLo = data.rol
+      });
   }
   showAllClients() {
     this.clientesService.getAllClients().subscribe(
@@ -101,7 +111,7 @@ export class PedidosComponent implements OnInit {
           cliente: form.fk_tbl_cliente_cedula,
           observacion: form.observasiones,
           numero_acta: "",
-          usuario: "Admin",
+          usuario: this.userLo,
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {

@@ -6,6 +6,8 @@ import { ModelAutoridadesI } from '../../modelos/modelo.autoridades';
 import { AutoridadesService } from '../../servicios/autoridades/autoridades.service';
 import Swal from 'sweetalert2';
 import { KardexService } from '../../servicios/kardex/kardex.service';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from '../../servicios/login/login.service';
 
 @Component({
   selector: 'app-compras',
@@ -16,7 +18,7 @@ export class ComprasComponent implements OnInit {
   compras: ModelComprasI[] = [];
   autoridades: ModelAutoridadesI[] = [];
 
-  constructor(private cd: ChangeDetectorRef, private comprasServices: ComprasService, private autoridadesServices: AutoridadesService, private dexServices: KardexService) { }
+  constructor(private loginService: LoginService, private cookieService: CookieService, private cd: ChangeDetectorRef, private comprasServices: ComprasService, private autoridadesServices: AutoridadesService, private dexServices: KardexService) { }
   formBitacora = new FormGroup({
     fecha_actual: new FormControl(''),
     movimiento: new FormControl(''),
@@ -47,9 +49,16 @@ export class ComprasComponent implements OnInit {
 
   ngOnInit(): void {
     this.showAllCompras()
+    this.definirUser();
 
   }
-
+  userLo: string = "";
+  definirUser() {
+    this.loginService.getUser(this.cookieService.get('tokenIC'))
+      .subscribe((data: any) => {
+        this.userLo = data.rol
+      });
+  }
   showAllAutoridades() {
     this.autoridadesServices.getAllAutoridades().subscribe(
       (autoridades: any) => {
@@ -102,19 +111,23 @@ export class ComprasComponent implements OnInit {
         this.showModalMore('center', 'success', 'Compra actualizada correctamente', false, 1500);
         this.showAllCompras()
 
+
         this.formBitacora.setValue({
           fecha_actual: new Date,
           movimiento: "Compra",
-          accion: "Editar",
+          accion: "Actualizar",
           cantidad: form.cantidad,
           ayudante: form.fk_tbl_autoridades_id,
           cliente: "",
           observacion: form.observacion,
           numero_acta: form.numero_acta,
-          usuario: "Admin",
+          usuario: this.userLo,
         })
 
+
+
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+
         })
 
 

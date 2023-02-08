@@ -7,8 +7,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class KardexService {
 
-  url: string = 'https://tinas-app.herokuapp.com/';
-    // url: string = 'http://localhost:3000/'; 
+  // url: string = 'https://tinas-app.herokuapp.com/';
+    url: string = 'http://localhost:3000/'; 
   constructor(private http: HttpClient) { }
 
   getAllBitacora() {

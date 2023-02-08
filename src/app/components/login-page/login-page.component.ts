@@ -23,7 +23,7 @@ export class LoginPageComponent implements OnInit {
     clave_usuario: new FormControl(''),
 
   });
-  constructor(private loginService: LoginService, private router: Router, private cookieService: CookieService) { }
+  constructor(private loginService: LoginService,  private cookieService: CookieService,private router: Router) { }
 
   ngOnInit(): void {
 

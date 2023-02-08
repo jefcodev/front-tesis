@@ -7,6 +7,8 @@ import { PrestamoTinasService } from '../../servicios/prestamo_tinas/prestamo-ti
 import { ModelTinasI } from '../../modelos/modelo.prestamo_tinas';
 import Swal from 'sweetalert2';
 import { KardexService } from '../../servicios/kardex/kardex.service';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from '../../servicios/login/login.service';
 
 
 @Component({
@@ -47,11 +49,20 @@ export class DevolucionesComponent implements OnInit {
   });
   prestamos: ModelTinasI[] = [];
 
-  constructor(private dexServices: KardexService, private devolucionesServices: DevolucionesService, private prestamoTinasServices: PrestamoTinasService) { }
+  constructor(private loginService: LoginService, private cookieService: CookieService, private dexServices: KardexService, private devolucionesServices: DevolucionesService, private prestamoTinasServices: PrestamoTinasService) { }
   devoluciones: ModelDevolucionesI[] = [];
   ngOnInit(): void {
     this.showAllDevoluciones()
     this.showAllPrestamos()
+    this.definirUser();
+  }
+
+  userLo: string = "";
+  definirUser() {
+    this.loginService.getUser(this.cookieService.get('tokenIC'))
+      .subscribe((data: any) => {
+        this.userLo = data.rol
+      });
   }
   showAllDevoluciones() {
     this.devolucionesServices.getAllDevoluciones().subscribe(
@@ -89,7 +100,7 @@ export class DevolucionesComponent implements OnInit {
           cliente: form.fk_tbl_prestamo_tinas_id,
           observacion: form.observacion,
           numero_acta: "",
-          usuario: "Admin",
+          usuario: this.userLo,
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
@@ -133,13 +144,13 @@ export class DevolucionesComponent implements OnInit {
         this.formBitacora.setValue({
           fecha_actual: new Date,
           movimiento: "Devolución",
-          accion: "Editar",
+          accion: "Actualizar",
           cantidad: form.cantidad,
           ayudante: "",
           cliente: form.fk_tbl_prestamo_tinas_id,
           observacion: form.observacion,
           numero_acta: "",
-          usuario: "Admin",
+          usuario: this.userLo,
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {

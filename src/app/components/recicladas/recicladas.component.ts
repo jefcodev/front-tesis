@@ -8,6 +8,8 @@ import { AutoridadesService } from '../../servicios/autoridades/autoridades.serv
 import { ModelAutoridadesI } from '../../modelos/modelo.autoridades';
 import Swal from 'sweetalert2';
 import { KardexService } from '../../servicios/kardex/kardex.service';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from '../../servicios/login/login.service';
 
 @Component({
   selector: 'app-recicladas',
@@ -31,7 +33,7 @@ export class RecicladasComponent implements OnInit {
   });
 
 
-  constructor(private dexServices: KardexService, private autoridadesServices: AutoridadesService, private guardiasService: GuardiasService, private recicladasServices: RecicladasService) { }
+  constructor(private loginService: LoginService, private cookieService: CookieService, private dexServices: KardexService, private autoridadesServices: AutoridadesService, private guardiasService: GuardiasService, private recicladasServices: RecicladasService) { }
   formRecicladas = new FormGroup({
     id: new FormControl(''),
     fecha: new FormControl('', [Validators.required]),
@@ -48,6 +50,14 @@ export class RecicladasComponent implements OnInit {
 
   ngOnInit(): void {
     this.showAllRecicladas()
+    this.definirUser()
+  }
+  userLo: string = "";
+  definirUser() {
+    this.loginService.getUser(this.cookieService.get('tokenIC'))
+      .subscribe((data: any) => {
+        this.userLo = data.rol
+      });
   }
   showAllRecicladas() {
     this.recicladasServices.getAllRecicladas().subscribe(
@@ -102,7 +112,7 @@ export class RecicladasComponent implements OnInit {
           cliente: "",
           observacion: form.observacion,
           numero_acta: form.numero_acta,
-          usuario: "Admin",
+          usuario: this.userLo,
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {

@@ -7,6 +7,8 @@ import { PrestamoTinasService } from 'src/app/servicios/prestamo_tinas/prestamo-
 import { PrestamoTinasComponent } from '../prestamo-tinas.component';
 import Swal from 'sweetalert2';
 import { KardexService } from '../../../servicios/kardex/kardex.service';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from '../../../servicios/login/login.service';
 
 
 @Component({
@@ -44,11 +46,19 @@ export class CompprestamoComponent implements OnInit {
     fk_tbl_cliente_cedula: new FormControl('', [Validators.required]),
   })
 
-  constructor(private clientesService: ClientesService,
+  constructor(private loginService: LoginService, private cookieService: CookieService, private clientesService: ClientesService,
     private prestamoTinasServices: PrestamoTinasService, private router: Router, private prestamoTinasComponent: PrestamoTinasComponent, private dexServices: KardexService) { }
 
   ngOnInit(): void {
     this.showAllClients()
+    this.definirUser()
+  }
+  userLo: string = "";
+  definirUser() {
+    this.loginService.getUser(this.cookieService.get('tokenIC'))
+      .subscribe((data: any) => {
+        this.userLo = data.rol
+      });
   }
 
   showAllClients() {
@@ -77,7 +87,7 @@ export class CompprestamoComponent implements OnInit {
           cliente: form.fk_tbl_cliente_cedula,
           observacion: "",
           numero_acta: "",
-          usuario: "Admin",
+          usuario: this.userLo,
         })
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
         })

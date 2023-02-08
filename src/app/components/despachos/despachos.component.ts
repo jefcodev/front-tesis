@@ -8,6 +8,8 @@ import { ModelGuardiasI } from '../../modelos/modelo.guardias';
 import { GuardiasService } from 'src/app/servicios/guardias/guardias.service';
 import Swal from 'sweetalert2';
 import { KardexService } from '../../servicios/kardex/kardex.service';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from '../../servicios/login/login.service';
 
 
 @Component({
@@ -52,15 +54,22 @@ export class DespachosComponent implements OnInit {
     fk_tbl_guardia_cedula: new FormControl('', [Validators.required])
   });
 
-  constructor(private despachoServicio: DespachosService,
+  constructor(private loginService: LoginService, private cookieService: CookieService, private despachoServicio: DespachosService,
     private clientesService: ClientesService,
     private guardiasService: GuardiasService,
     private despachoServices: DespachosService, private dexServices: KardexService) { }
 
   ngOnInit(): void {
     this.showAllDespachos();
+    this.definirUser()
   }
-
+  userLo: string = "";
+  definirUser() {
+    this.loginService.getUser(this.cookieService.get('tokenIC'))
+      .subscribe((data: any) => {
+        this.userLo = data.rol
+      });
+  }
   getDataDespachos(id_despacho: any, fecha_despacho: any, cantidad_libras:
     any, numero_tinas: any, ruta: any, observaciones: any, cliente: any, guardia: any) {
     this.formDespacho.patchValue({
@@ -123,7 +132,7 @@ export class DespachosComponent implements OnInit {
           cliente: form.fk_tbl_cliente_cedula,
           observacion: form.observasiones,
           numero_acta: "",
-          usuario: "Admin",
+          usuario: this.userLo,
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {

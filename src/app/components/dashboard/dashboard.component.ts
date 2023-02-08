@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LoginService } from '../../servicios/login/login.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ModelLoginI } from 'src/app/modelos/modelo.login';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -8,36 +12,37 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  userLogeado: string = "";
+  login: ModelLoginI | undefined;
   // url: string = 'http://localhost:3000/';
-  constructor(private cookieService: CookieService, private http: HttpClient) { }
+  constructor(private cookieService: CookieService, private http: HttpClient, private loginService: LoginService) { }
 
+
+  formgetUser = new FormGroup({
+    token: new FormControl(this.cookieService.get('tokenIC'))
+  });
   ngOnInit(): void {
+    this.showUser();
+
   }
   salir() {
-    // let httpHeaders: HttpHeaders = new HttpHeaders();
+
     this.cookieService.set('tokenIC', '')
-    // const token = this.cookieService.get('tokenIC');
-
-
-    // httpHeaders = httpHeaders.append('Authorization', 'Bearer ' + token)
-
-    // let direccion = this.url + "check";
-    // this.http.get(direccion, {
-    //   headers: httpHeaders,
-    //   observe: 'response'
-    // })
-    //   .subscribe(ressult => {
-    //     console.log(ressult)
-    //     console.log(ressult.status)
-    //     if (ressult.status == 200) {
-
-    //     } else {
     window.location.reload();
-    //       }
-    //       // if(ressult.)
+
+  }
+  public showUser() {
+
+    this.loginService.getUser(this.cookieService.get('tokenIC')).subscribe((data: any) => {
+      // console.log("asdas")
+      console.log(data)
+      this.userLogeado = data.rol;
+      // this.login=data;
+
+    });
 
 
-    //     })
+    // console.log(this.cookieService.get('tokenIC'))
   }
 
 

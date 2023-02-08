@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { ModelAutoridadesI } from '../../../../modelos/modelo.autoridades';
 import { AutoridadesService } from '../../../../servicios/autoridades/autoridades.service';
 import { KardexService } from '../../../../servicios/kardex/kardex.service';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from '../../../../servicios/login/login.service';
 
 @Component({
   selector: 'app-comrecicladas',
@@ -41,12 +43,19 @@ export class ComrecicladasComponent implements OnInit {
     fk_tbl_autoridades_id: new FormControl('', [Validators.required])
   })
 
-  constructor(private autoridadesServices: AutoridadesService,
+  constructor(private loginService: LoginService, private cookieService: CookieService, private autoridadesServices: AutoridadesService,
     private recicladasServices: RecicladasService, private recicladasComponent: RecicladasComponent,
-    private router: Router,private dexServices: KardexService) { }
+    private router: Router, private dexServices: KardexService) { }
 
   ngOnInit(): void {
     this.showAllAutoridades();
+    this.definirUser();
+  }
+  userLo: string = ""; definirUser() {
+    this.loginService.getUser(this.cookieService.get('tokenIC'))
+      .subscribe((data: any) => {
+        this.userLo = data.rol
+      });
   }
 
 
@@ -76,7 +85,7 @@ export class ComrecicladasComponent implements OnInit {
           cliente: "",
           observacion: form.observacion,
           numero_acta: form.numero_acta,
-          usuario: "Admin",
+          usuario: this.userLo,
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
