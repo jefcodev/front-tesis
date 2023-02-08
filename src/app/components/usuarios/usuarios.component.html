@@ -1,0 +1,161 @@
+<div class="col-md-12">
+    <div style="text-align: center;">
+        <h1>Usuarios</h1>
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearCliente" (click)="Resetform()">Nuevo Usuario</button>
+    <br><br>
+    <table class="table table-bordered table-hover bg-white" style="text-align: center;">
+        <thead>
+            <tr>
+                <th style="width: 10px;">ID</th>
+                <th>Nombres</th>
+                <th>Rol</th>
+                <th>Opciones</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of usuarios">
+                <td>
+                    {{i.id_usuario}}
+                </td>
+                <td>
+                    {{i.nombre_usuario}}
+                </td>
+                <td>
+                    {{i.tipo_usuario}}
+                </td>
+                <td class="d-flex justify-content-center">
+
+                    <a class="btn btn-success" data-toggle="modal" data-target="#editarIngredients"
+                        (click)="getDataUsuarios(i.id_usuario,i.tipo_usuario,i.nombre_usuario)">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <div class="modal fade" id="editarIngredients" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="formUpdateUsuarios">
+                                        <div class="form-group">
+                                            <input type="text" name="Cedula Cliente" formControlName="nombre_usuario"
+                                                placeholder="Ingrese los nombres completos" class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="nombre_usuarioo.invalid && (nombre_usuarioo.dirty ||  nombre_usuarioo.touched)">
+                                                <div class="container-error-message">
+                                                    Ingrese su usuario
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="select">
+                                                <select name="format" id="format" formControlName="tipo_usuario">
+                                                    <option *ngFor="let c of cities" [value]="c.name">{{c.name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="alert__danger"
+                                                *ngIf="tipo_usuarioo.invalid && (tipo_usuarioo.dirty ||  tipo_usuarioo.touched)">
+                                                <div class="container-error-message">
+                                                    Seleccione el tipo de usuario
+                                                </div>
+                                            </div>
+
+                                            <br>
+                                            <input type="text" name="Nombres Completos" formControlName="clave_usuario"
+                                                placeholder="Ingrese la clave" class="form-control">
+                                            <div class="alert__danger"
+                                                *ngIf="clave_usuarioo.invalid && (clave_usuarioo.dirty || clave_usuarioo.touched)">
+                                                <div class="container-error-message">
+                                                    Ingrese la clave
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary"
+                                                (click)="updateUsuarios(formUpdateUsuarios.value)"
+                                                data-dismiss="modal">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- +++++++++++ MODEL CREAR UN Guardia +++++++++ -->
+<div class="modal fade" id="crearCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo Ayudante</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formUsuarios">
+                    <div class="form-group">
+                        <input type="text" name="Cedula Cliente" formControlName="nombre_usuario"
+                            placeholder="Ingrese los nombres completos" class="form-control">
+                        <div class="alert__danger"
+                            *ngIf="nombre_usuario.invalid && (nombre_usuario.dirty ||  nombre_usuario.touched)">
+                            <div class="container-error-message">
+                                Ingrese su usuario
+                            </div>
+                        </div>
+                        <br>
+                        <div class="select">
+                            <select name="format" id="format" formControlName="tipo_usuario">
+                                <option *ngFor="let c of cities" [value]="c.name">{{c.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="alert__danger"
+                            *ngIf="tipo_usuario.invalid && (tipo_usuario.dirty ||  tipo_usuario.touched)">
+                            <div class="container-error-message">
+                                Seleccione el tipo de usuario
+                            </div>
+                        </div>
+
+                        <br>
+                        <input type="text" name="Nombres Completos" formControlName="clave_usuario"
+                            placeholder="Ingrese la clave" class="form-control">
+                        <div class="alert__danger"
+                            *ngIf="clave_usuario.invalid && (clave_usuario.dirty || clave_usuario.touched)">
+                            <div class="container-error-message">
+                                Ingrese la clave
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            (click)="crearUsuario(formUsuarios.value)">Crear</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edutar Clkeint -->

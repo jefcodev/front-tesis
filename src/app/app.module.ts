@@ -31,6 +31,7 @@ import { ComrecicladasComponent } from './components/recicladas/comprecicladas/c
 import { HomeAComponent } from './components/homeA/home-a/home-a.component';
 import { CompcompraComponent } from './components/compras/compcompra/compcompra.component';
 import { KardexComponent } from './components/kardex/kardex.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
 // import {
 //   MatDatepickerModule,
 //   DateAdapter,
@@ -65,6 +66,7 @@ import { KardexComponent } from './components/kardex/kardex.component';
     HomeAComponent,
     CompcompraComponent,
     KardexComponent,
+    UsuariosComponent,
     // CommonModule
   ],
   imports: [

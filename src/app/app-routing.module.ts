@@ -24,6 +24,7 @@ import { HomeAComponent } from './components/homeA/home-a/home-a.component';
 import { CompcompraComponent } from './components/compras/compcompra/compcompra.component';
 import { KardexComponent } from './components/kardex/kardex.component';
 import { UserGuardGuard } from './user-guard.guard';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "dashboard/homeA", pathMatch: "full" },
@@ -34,6 +35,7 @@ const routes: Routes = [
       { path: "kardex", component: KardexComponent },
       { path: "cliente", component: ClientesComponent },
       { path: "autoridad", component: AutoridadesComponent },
+      { path: "usuarios", component: UsuariosComponent },
       { path: "tinas", component: TinasComponent },
       {
         path: "compras", component: ComprasComponent, children: [{
@@ -68,13 +70,13 @@ const routes: Routes = [
           { path: "compedido", component: CompedidosComponent }
         ]
       }
-    ], canActivate:[UserGuardGuard]
+    ], canActivate: [UserGuardGuard]
   },
   { path: "login", component: LoginPageComponent },
-  
-  
-  
- 
+
+
+
+
 
 ];
 

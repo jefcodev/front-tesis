@@ -126,7 +126,6 @@
             </div>
             <div class="modal-body">
                 <form [formGroup]="formDevolucion">
-
                     <div class="select">
                         <select name="format" id="format" formControlName="fk_tbl_prestamo_tinas_id">
                             <option *ngFor="let c of prestamos" [value]="c.id_prestamo_tinas">{{c.cliente}}
