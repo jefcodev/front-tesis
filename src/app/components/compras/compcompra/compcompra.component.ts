@@ -13,7 +13,7 @@ import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-compcompra',
   templateUrl: './compcompra.component.html',
-  styleUrls: ['./compcompra.component.scss']
+  styleUrls: ['./compcompra.component.css','./compcompra.component.scss' ]
 })
 export class CompcompraComponent implements OnInit {
   userLo: string = "";

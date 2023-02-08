@@ -1,11 +1,11 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"></h1>
         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-    </div>
+    </div> -->
 
     <!-- Content Row -->
     <div class="row">
@@ -38,9 +38,8 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{pedido}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-shop fa-2x text-gray-300"></i>
-                            <i class="fa-solid fa-shop"></i>
-                            
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+
                         </div>
                     </div>
                 </div>
@@ -58,12 +57,14 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{stock}}</div>
+
                                 </div>
-                               
+
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            <!-- <i class="fas fa-box-circle-check fa-2x text-gray-300"></i> -->
+                            <i class="fab fa-dropbox fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -81,7 +82,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{prestamo}}</div>
                         </div>
                         <div class="col-auto">
-                            <!-- <i class="fas fa-comments fa-2x text-gray-300"></i> -->
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -91,57 +92,77 @@
 
     <!-- Content Row -->
 
-    <div class="row">
+    
 
-        <!-- Area Chart -->
-        <div class="col-xl-8 col-lg-7">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Clientes pendiente de entrega de huacales</h6>
-                </div>
-                
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Clientes pendiente de entrega de huacales
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                   
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0"
+                                role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
+                                            rowspan="1" colspan="1" aria-sort="ascending"
+                                            aria-label="Name: activate to sort column descending"
+                                            style="width: 25%;">Fecha Prestamo</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-label="Position: activate to sort column ascending"
+                                            style="width: 25%;">Cliente</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-label="Office: activate to sort column ascending"
+                                            style="width: 25%;"># Tinas</th>
+                                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
+                                            colspan="1" aria-label="Age: activate to sort column ascending"
+                                            style="width: 25%;">Fecha Entrega</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        
+                                        <th rowspan="1" colspan="1">Fecha Prestamo</th>
+                                        <th rowspan="1" colspan="1">Cliente</th>
+                                        <th rowspan="1" colspan="1"># Tinas</th>
+                                        <th rowspan="1" colspan="1">Fecha Entrega</th>
+                                        
+                                </tfoot>
+                                <tbody>
+                                    <tr *ngFor="let i of prestamosHome">
+                                        <td>
+                                            {{i.fecha_prestamo | date:"yyyy-MM-dd"}}
+                                        </td>
+                                        <td>
+                                            {{i.cliente}}
+                                        </td>
+                                        <td>
+                                            {{i.numero_tinas}}
+                                        </td>
+                                        
+                                        <td>
+                                            {{i.fecha_entrega | date:"yyyy-MM-dd"}}
+                                        </td>
+                                        
+    
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                <!-- Card Body -->
-                <div class="card-body">
-                    <div class="chart-area">
-                        <table class="table table-bordered table-hover bg-white" style="text-align: center;">
-                            <thead>
-                                <tr>
-                                    <th>Cliente</th>
-                                    <th>Número de huacales</th>
-                                    <th>Fecha de préstamo</th>
-                                    <th>Fecha de entrega</th>
-        
-                                </tr>
-        
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let i of prestamosHome">
-                                    <td>
-                                        {{i.cliente}}
-                                    </td>
-                                    <td>
-                                        {{i.numero_tinas}}
-                                    </td>
-                                    <td>
-                                        {{i.fecha_prestamo | date:"yyyy-MM-dd"}}
-                                    </td>
-                                    <td>
-                                        {{i.fecha_entrega | date:"yyyy-MM-dd"}}
-                                    </td>
-        
-                                </tr>
-                            </tbody>
-                        </table>
+
+                        
 
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Pie Chart -->
-       
     </div>
 
 

@@ -33,7 +33,6 @@ select::-ms-expand {
 
 }
 
-
 .select::after {
     content: '\25BC';
     position: absolute;
@@ -65,15 +64,13 @@ select::-ms-expand {
     max-width: auto;
     min-width: 650px;
     // box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-
-
+    
 }
 
 .container__title__object {
-
+    // background-color: yellow;
     text-align: center;
     width: auto;
-    height: auto;
 }
 
 .container__data__object {
@@ -129,7 +126,6 @@ label {
     display: block;
     width: 300px;
 }
-
 
 .alert__danger {
     color: #721c24;

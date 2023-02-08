@@ -46,7 +46,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Editar Ingrediente</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Cliente</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -54,9 +54,12 @@
                                 <div class="modal-body">
                                     <form [formGroup]="nClienteFormA">
                                         <div class="form-group">
+                                            
                                             <label>
                                                 {{cedulaAux}}
                                             </label>
+                                            <br>
+                                            
                                             <input type="text" name="Nombre Ingrediente" formControlName="nombre"
                                                 class="form-control">
                                             <div class="alert__danger"
@@ -138,6 +141,7 @@
                         <input type="text" formControlName="cedula" placeholder="Ingrese su cédula"
                             class="form-control">
                         <div class="alert__danger" *ngIf="cedula.invalid && (cedula.dirty || cedula.touched)">
+                            
                             <div class="container-error-message" *ngIf="cedula?.errors?.['required']">
                                 La cédula es requerida
                             </div>
@@ -157,12 +161,14 @@
                         <input type="text" formControlName="nombre" placeholder="Ingrese sus nombres"
                             class="form-control">
                         <div class="alert__danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                            
                             <div class="container-error-message">
                                 Sus nombres son requeridos
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
+                        
                         <input type="text" name="Nombres Completos" formControlName="apellido"
                             placeholder="Ingrese sus apelldios" class="form-control">
                         <div class="alert__danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">

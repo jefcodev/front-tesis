@@ -4,13 +4,18 @@
             <h4 >Datos Autoridades</h4>
         </div>
 
+
+        
+
         <div class="container__data__object">
             <div class="container__data__object__item">
+                
                 <div class="select">
                     <select name="format" id="format" formControlName="fk_tbl_autoridades_id">
                         <option *ngFor="let c of autoridades" [value]="c.id">{{c.nombre +' '+c.apellido}}
                         </option>
                     </select>
+                    
 
 
                 </div>

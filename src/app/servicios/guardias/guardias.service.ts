@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GuardiasService {
-  url: string = 'https://tinas-app.herokuapp.com/';
-    // url:string='http://localhost:3000/';
+  url = environment.base_url; 
   
   constructor(private http: HttpClient) { }
 
