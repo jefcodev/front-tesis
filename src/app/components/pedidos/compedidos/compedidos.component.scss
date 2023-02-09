@@ -51,19 +51,20 @@ select::-ms-expand {
 
 
 .container__main {
- // // background: red;
- padding: 10px;
- border: solid 1px;
- border-radius: 10px;
- width: auto;
- height: auto;
+    // // background: red;
+    padding: 10px;
+    border: solid 1px;
+    border-radius: 10px;
+    width: auto;
+    height: auto;
 
- // padding-right: 70px;
- margin-left: 200px;
- margin-right: 200px;
- max-width: auto;
- min-width: 650px;
- // box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    // padding-right: 70px;
+    margin-left: 100px;
+    margin-right: 100px;
+    max-width: auto;
+    min-width: 1000px;
+    // box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+   
    
 }
 
@@ -100,7 +101,8 @@ select::-ms-expand {
    // background: yellow;
    display: flex;
 
-   // justify-content: center;
+    justify-content: center;
+   // flex-wrap: wrap;
    text-align: center;
    width: 100%;
    height: auto;
@@ -112,6 +114,9 @@ select::-ms-expand {
    display: inline-block;
    // margin-left: 30px;
    text-align: center;
+   margin-right: 20px;
+   margin-left: 20px;
+
 }
 
 .container__tutton {
@@ -125,6 +130,9 @@ input,
 label {
    display: block;
    width: 300px;
+   // margin-right: 20px;
+   // margin-left: 20px;
+   // margin-top: 10px;
 }
 
 .alert__danger {
@@ -132,8 +140,10 @@ label {
    background: #f8d7da;
    border-color: #f5c6cb;
    margin-bottom: 5px;
+  
 }
 
 .container-error-message {
    padding: 3px;
+  
 }

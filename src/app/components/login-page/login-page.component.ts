@@ -37,6 +37,7 @@ export class LoginPageComponent implements OnInit {
         this.resp = data.resp;
       } else {
         this.estado = false;
+        localStorage.setItem('tokenIC', data.token)
         this.cookieService.set('tokenIC', data.token, 4, '/');
         this.showModalMore('center', 'success', 'Bienvenido '+data.usuario, false, 2000);
         this.router.navigate(['/dashboard/homeA']);

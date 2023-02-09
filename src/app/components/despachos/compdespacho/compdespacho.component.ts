@@ -65,7 +65,7 @@ export class CompdespachoComponent implements OnInit {
     this.definirUser()
   }
   userLo: string = ""; definirUser() {
-    this.loginService.getUser(this.cookieService.get('tokenIC'))
+    this.loginService.getUser(localStorage.getItem('tokenIC'))
       .subscribe((data: any) => {
         this.userLo = data.rol
       });

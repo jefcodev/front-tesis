@@ -17,7 +17,7 @@ import { LoginService } from '../../../servicios/login/login.service';
   styleUrls: ['./compedidos.component.scss']
 })
 export class CompedidosComponent implements OnInit {
-
+  accion: string = "";
 
   formBitacora = new FormGroup({
     fecha_actual: new FormControl(''),
@@ -37,11 +37,12 @@ export class CompedidosComponent implements OnInit {
 
   formPedido = new FormGroup({
     fecha_pedido: new FormControl(new Date),
-    fecha_entrega: new FormControl('', [Validators.required]),
+    fecha_entrega: new FormControl(new Date),
     cantidad_libras: new FormControl('', [Validators.required]),
     ruta: new FormControl('', [Validators.required]),
     observasiones: new FormControl(''),
-    fk_tbl_cliente_cedula: new FormControl('', [Validators.required])
+    fk_tbl_cliente_cedula: new FormControl('', [Validators.required]),
+    accion: new FormControl('', [Validators.required])
   })
 
 
@@ -50,7 +51,7 @@ export class CompedidosComponent implements OnInit {
     this.definirUser();
   }
   userLo: string = ""; definirUser() {
-    this.loginService.getUser(this.cookieService.get('tokenIC'))
+    this.loginService.getUser(localStorage.getItem('tokenIC'))
       .subscribe((data: any) => {
         this.userLo = data.rol
       });
@@ -66,6 +67,8 @@ export class CompedidosComponent implements OnInit {
   }
 
   createPedido(form: any) {
+    alert(this.accion)
+    console.log(form)
     if (this.formPedido.valid) {
       this.pedidosService.saveOrders(form).subscribe(data => {
         this.router.navigateByUrl("/dashboard/pedido");

@@ -58,7 +58,7 @@ export class PrestamoTinasComponent implements OnInit {
   }
   userLo: string = "";
   definirUser() {
-    this.loginService.getUser(this.cookieService.get('tokenIC'))
+    this.loginService.getUser(localStorage.getItem('tokenIC'))
       .subscribe((data: any) => {
         this.userLo = data.rol
       });

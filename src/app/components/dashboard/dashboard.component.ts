@@ -26,14 +26,13 @@ export class DashboardComponent implements OnInit {
 
   }
   salir() {
-
-    this.cookieService.set('tokenIC', '')
+    localStorage.removeItem('tokenIC')
     window.location.reload();
 
   }
   public showUser() {
 
-    this.loginService.getUser(this.cookieService.get('tokenIC')).subscribe((data: any) => {
+    this.loginService.getUser(localStorage.getItem('tokenIC')).subscribe((data: any) => {
       // console.log("asdas")
       console.log(data)
       this.userLogeado = data.rol;

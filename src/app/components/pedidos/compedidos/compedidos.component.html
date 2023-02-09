@@ -26,18 +26,24 @@
         <div class="container__title__object2">
             <h4>Datos Pedido</h4>
         </div>
+
+        <div style="display: flex; text-align: center;justify-content: center;">
+            <div>
+                <input style="background: rgb(117, 212, 136); width: 100px;" type="radio" id="radio1"
+                    formControlName="accion" [(ngModel)]="accion"  value="true" name="sexo">
+                <label style=" width: 100px;" for="inlineRadio1">Despachar</label>
+            </div>
+            <div>
+                <input style="width: 150px;" type="radio" id="radio1" formControlName="accion" 
+                [(ngModel)]="accion"   value="false" name="sexo">
+                <label style=" width: 150px;" for="inlineRadio1">Posponer despacho</label>
+
+            </div>
+        </div>
+
+
         <div class="container__body__object">
             <div class="container__body__general">
-                <div class="container__body__item">
-                    <label for="start">Fecha de entrega: </label>
-                    <input formControlName="fecha_entrega" type="date" id="start" name="trip-start">
-                    <div class="alert__danger"
-                        *ngIf="fecha_entrega.invalid && (fecha_entrega.dirty || fecha_entrega.touched)">
-                        <div class="container-error-message">
-                            La fecha de entrega es requerida
-                        </div>
-                    </div>
-                </div>
                 <div class="container__body__item">
                     <label for="tentacles"> Cantidad en libras:</label>
                     <input formControlName="cantidad_libras" type="number" id="tentacles" name="tentacles">
@@ -47,10 +53,14 @@
                             La cantidad es necesaria
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="container__body__general">
                 <div class="container__body__item">
+
+
+
                     <label for="tentacles">Ruta:</label>
                     <input formControlName="ruta" type="text" id="tentacles" name="tentacles">
                     <div class="alert__danger" *ngIf="ruta.invalid && (ruta.dirty || ruta.touched)">
@@ -58,7 +68,12 @@
                             La ruta es necesaria
                         </div>
                     </div>
+
                 </div>
+            </div>
+
+
+            <div class="container__body__general">
                 <div class="container__body__item">
 
                     <label for="tentacles"> Observaciones:</label>
@@ -69,10 +84,16 @@
                             Las observasiones son necesarias
                         </div>
                     </div>
+
+
+
                 </div>
             </div>
         </div>
+
         <br>
+
+
         <div class="container__tutton">
             <button type="button" style="margin-right: 20px;" class="btn btn-primary"
                 (click)="createPedido(formPedido.value)">Guardar</button>
