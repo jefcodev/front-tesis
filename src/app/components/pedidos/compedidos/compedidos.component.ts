@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModelClientesI } from 'src/app/modelos/modelo.clientes';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ClientesService } from 'src/app/servicios/clientes/clientes.service';
@@ -10,6 +10,9 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { KardexService } from '../../../servicios/kardex/kardex.service';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from '../../../servicios/login/login.service';
+// import { NgbModa } from '@ng-bootstrap/ng-bootstrap'
+import { GuardiasService } from '../../../servicios/guardias/guardias.service';
+import { ModelGuardiasI } from 'src/app/modelos/modelo.guardias';
 
 @Component({
   selector: 'app-compedidos',
@@ -17,6 +20,25 @@ import { LoginService } from '../../../servicios/login/login.service';
   styleUrls: ['./compedidos.component.scss']
 })
 export class CompedidosComponent implements OnInit {
+
+
+  showModal = false;
+  guardias: ModelGuardiasI[] = [];
+
+  closeModal() {
+    this.showModal = false;
+  }
+
+  fecha_pedidoV: string = "";
+  cantidad_librasV: string = "";
+  rutaV: string = "";
+  fk_tbl_cliente_cedulaV: string = "";
+  accionV: string = "";
+  cantidadPollosV: string = "";
+  observacionesV: string = "";
+
+
+
   accion: string = "";
 
   formBitacora = new FormGroup({
@@ -32,10 +54,47 @@ export class CompedidosComponent implements OnInit {
   });
 
   clientes: ModelClientesI[] = [];
-  constructor(private loginService: LoginService, private cookieService: CookieService, private clientesService: ClientesService, private pedidosService: PedidosService, private router: Router,
+  constructor(private guardiasService: GuardiasService, private loginService: LoginService, private cookieService: CookieService, private clientesService: ClientesService, private pedidosService: PedidosService, private router: Router,
     private pedidosComponent: PedidosComponent, private dexServices: KardexService) { }
 
   formPedido = new FormGroup({
+    fecha_pedido: new FormControl(new Date),
+    fecha_entrega: new FormControl(new Date),
+    cantidad_libras: new FormControl('', [Validators.required]),
+    ruta: new FormControl('', [Validators.required]),
+    observasiones: new FormControl(''),
+    fk_tbl_cliente_cedula: new FormControl('', [Validators.required]),
+    accion: new FormControl('', [Validators.required]),
+    numero_pollos: new FormControl('', [Validators.required]),
+    // fk_tbl_guardia_cedula: new FormControl('', [Validators.required]),
+    // numero_acta: new FormControl('', [Validators.required]),
+    // observacionesPrestamo: new FormControl('', [Validators.required])
+  })
+
+  formPedidoFinal = new FormGroup({
+    fecha_pedido: new FormControl(new Date),
+    fecha_entrega: new FormControl(''),
+    cantidad_libras: new FormControl(''),
+    ruta: new FormControl(''),
+    observasiones: new FormControl(''),
+    fk_tbl_cliente_cedula: new FormControl(''),
+    accion: new FormControl(''),
+    fk_tbl_guardia_cedula: new FormControl(''),
+    numero_acta: new FormControl(''),
+    observacionesPrestamo: new FormControl(''),
+    numero_tinas: new FormControl('')
+  })
+
+  formPedidoDetalle = new FormGroup({
+    fecha_entrega: new FormControl(''),
+    fk_tbl_guardia_cedula: new FormControl('', [Validators.required]),
+    numero_acta: new FormControl('', [Validators.required]),
+    observacionesPrestamo: new FormControl('', [Validators.required])
+  })
+
+
+
+  formPedidoResult = new FormGroup({
     fecha_pedido: new FormControl(new Date),
     fecha_entrega: new FormControl(new Date),
     cantidad_libras: new FormControl('', [Validators.required]),
@@ -65,34 +124,198 @@ export class CompedidosComponent implements OnInit {
       (error) => console.log(error)
     );
   }
+  crearDespachoPedido(form: any) {
 
-  createPedido(form: any) {
-    alert(this.accion)
-    console.log(form)
     if (this.formPedido.valid) {
-      this.pedidosService.saveOrders(form).subscribe(data => {
+
+
+      let cantidadLibras = parseFloat(this.cantidad_librasV)
+      let numeroPollos = parseFloat(this.cantidadPollosV)
+      let totalLibras = numeroPollos * cantidadLibras;
+
+
+      totalLibras = parseFloat(totalLibras.toFixed(2))
+
+      alert(totalLibras)
+      let resultTinas: number;
+      let tinasFInales;
+
+      if (cantidadLibras < 3.7) {
+
+        resultTinas = numeroPollos / 15;
+        tinasFInales = Math.ceil(resultTinas);
+
+
+        //15
+      } else if (cantidadLibras > 3.7 && cantidadLibras < 5.4) {
+
+        // 12
+        resultTinas = numeroPollos / 12;
+        tinasFInales = Math.ceil(resultTinas);
+
+
+      } else if (cantidadLibras > 5.4) {
+
+        // 10
+        resultTinas = numeroPollos / 10;
+        tinasFInales = Math.ceil(resultTinas);
+
+
+      }
+      // let a = (resultTinas);
+
+      this.formPedidoFinal.setValue({
+        fecha_pedido: this.fecha_pedidoV,
+        fecha_entrega: form.fecha_entrega,
+        cantidad_libras: totalLibras,
+        ruta: this.rutaV,
+        observasiones: this.observacionesV,
+        fk_tbl_cliente_cedula: this.fk_tbl_cliente_cedulaV,
+        accion: this.accionV,
+        fk_tbl_guardia_cedula: form.fk_tbl_guardia_cedula,
+        numero_acta: form.numero_acta,
+        observacionesPrestamo: form.observacionesPrestamo,
+        numero_tinas: tinasFInales
+      })
+
+      this.pedidosService.saveOrders(this.formPedidoFinal.value).subscribe(data => {
         this.router.navigateByUrl("/dashboard/pedido");
         this.pedidosComponent.showAllOrders();
-        this.showModalMore('center', 'success', 'Pedido registrado exitosamente', false, 2000);
 
         this.formBitacora.setValue({
           fecha_actual: new Date,
           movimiento: "Pedido",
           accion: "Crear",
-          cantidad: form.cantidad_libras,
-          ayudante: "",
-          cliente: form.fk_tbl_cliente_cedula,
-          observacion: form.observasiones,
-          numero_acta: "",
+          cantidad: totalLibras,
+          ayudante: form.fk_tbl_guardia_cedula,
+          cliente: this.fk_tbl_cliente_cedulaV,
+          observacion: form.observacionesPrestamo,
+          numero_acta: form.numero_acta,
+          usuario: this.userLo,
+        })
+        console.log(this.formBitacora.value)
+
+        this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+          // alert("hizo a")
+        })
+
+        this.formBitacora.setValue({
+          fecha_actual: new Date,
+          movimiento: "Préstamo",
+          accion: "Crear",
+          cantidad: totalLibras,
+          ayudante: form.fk_tbl_guardia_cedula,
+          cliente: this.fk_tbl_cliente_cedulaV,
+          observacion: form.observacionesPrestamo,
+          numero_acta: form.numero_acta,
+          usuario: this.userLo,
+        })
+        console.log(this.formBitacora.value)
+
+        this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+          // alert("hizo a")
+        })
+
+        this.formBitacora.setValue({
+          fecha_actual: new Date,
+          movimiento: "Despacho",
+          accion: "Crear",
+          cantidad: totalLibras,
+          ayudante: form.fk_tbl_guardia_cedula,
+          cliente: this.fk_tbl_cliente_cedulaV,
+          observacion: this.observacionesV,
+          numero_acta: form.numero_acta,
           usuario: this.userLo,
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
         })
+
+
+        this.showModal = false;
+        this.showModalMore('center', 'success', 'Detalle registrado exitosamente', false, 2000);
       })
+
+
+
     } else {
-      this.ShowModal('Pedido', 'Error al registrar pedido', 'error');
+      this.ShowModal('Pedido', 'Algún campo se encuentra vacío', 'error');
+
     }
+
+  }
+
+  createPedido(form: any) {
+    let numeroPollos = parseFloat(form.cantidad_libras)
+    let cantidadLibras = parseFloat(form.numero_pollos)
+
+
+    if (form.accion == 'true') {
+      if (this.formPedido.valid) {
+
+        this.showModal = true;
+        this.showAllGuards();
+        this.fecha_pedidoV = form.fecha_pedido;
+        this.cantidad_librasV = form.cantidad_libras
+        this.rutaV = form.ruta
+        this.fk_tbl_cliente_cedulaV = form.fk_tbl_cliente_cedula
+        this.accionV = form.accion
+        this.cantidadPollosV = form.numero_pollos
+
+        this.observacionesV = form.observasiones
+
+      } else {
+        this.ShowModal('Pedido', 'Algún campo se encuentra vacío', 'error');
+      }
+
+    } else {
+      if (this.formPedido.valid) {
+
+
+        let resultado = numeroPollos * cantidadLibras;
+
+        resultado = parseFloat(resultado.toFixed(2))
+
+
+        this.formPedidoResult.setValue({
+          fecha_pedido: form.fecha_pedido,
+          fecha_entrega: form.fecha_entrega,
+          cantidad_libras: resultado,
+          ruta: form.ruta,
+          observasiones: form.observasiones,
+          fk_tbl_cliente_cedula: form.fk_tbl_cliente_cedula,
+          accion: form.accion,
+
+        })
+        console.log(this.formPedidoResult)
+
+
+
+        this.pedidosService.saveOrders(this.formPedidoResult.value).subscribe(data => {
+          this.router.navigateByUrl("/dashboard/pedido");
+          this.pedidosComponent.showAllOrders();
+          this.showModalMore('center', 'success', 'Pedido registrado exitosamente', false, 2000);
+
+          this.formBitacora.setValue({
+            fecha_actual: new Date,
+            movimiento: "Pedido",
+            accion: "Crear",
+            cantidad: resultado,
+            ayudante: "",
+            cliente: form.fk_tbl_cliente_cedula,
+            observacion: form.observasiones,
+            numero_acta: "",
+            usuario: this.userLo,
+          })
+
+          this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+          })
+        })
+      } else {
+        this.ShowModal('Pedido', 'Algún campo se encuentra vacío', 'error');
+      }
+    }
+
 
   }
 
@@ -115,4 +338,19 @@ export class CompedidosComponent implements OnInit {
   get cantidad_libras() { return this.formPedido.get('cantidad_libras'); }
   get ruta() { return this.formPedido.get('ruta'); }
   get observasiones() { return this.formPedido.get('observasiones'); }
+  get numero_pollos() { return this.formPedido.get('numero_pollos'); }
+  get accionn() { return this.formPedido.get('accion'); }
+
+
+  showAllGuards() {
+    this.guardiasService.getAllGuards().subscribe(
+      (guardias: any) => {
+        this.guardias = guardias
+
+      },
+      (error) => console.log(error)
+    );
+  }
 }
+
+

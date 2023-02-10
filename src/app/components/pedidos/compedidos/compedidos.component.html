@@ -26,25 +26,44 @@
         <div class="container__title__object2">
             <h4>Datos Pedido</h4>
         </div>
-
+        <br>
         <div style="display: flex; text-align: center;justify-content: center;">
             <div>
                 <input style="background: rgb(117, 212, 136); width: 100px;" type="radio" id="radio1"
-                    formControlName="accion" [(ngModel)]="accion"  value="true" name="sexo">
+                    formControlName="accion" [(ngModel)]="accion" value="true" name="sexo">
                 <label style=" width: 100px;" for="inlineRadio1">Despachar</label>
             </div>
             <div>
-                <input style="width: 150px;" type="radio" id="radio1" formControlName="accion" 
-                [(ngModel)]="accion"   value="false" name="sexo">
+                <input style="width: 150px;" type="radio" id="radio1" formControlName="accion" [(ngModel)]="accion"
+                    value="false" name="sexo">
                 <label style=" width: 150px;" for="inlineRadio1">Posponer despacho</label>
 
             </div>
+            <!-- <div class="alert__danger" *ngIf="accionn.invalid && (accionn.dirty || accionn.touched)">
+                <div class="container-error-message">
+                    Seleccione
+                </div>
+            </div> -->
         </div>
+
+
 
 
         <div class="container__body__object">
             <div class="container__body__general">
                 <div class="container__body__item">
+
+                    <label for="tentacles"> Número de pollo:</label>
+                    <input formControlName="numero_pollos" type="number" id="tentacles" name="tentacles">
+                    <div class="alert__danger"
+                        *ngIf="numero_pollos.invalid && (numero_pollos.dirty || numero_pollos.touched)">
+                        <div class="container-error-message">
+                            El número de pollos es requerido
+                        </div>
+                    </div>
+                </div>
+                <div class="container__body__item">
+
                     <label for="tentacles"> Cantidad en libras:</label>
                     <input formControlName="cantidad_libras" type="number" id="tentacles" name="tentacles">
                     <div class="alert__danger"
@@ -56,11 +75,9 @@
 
                 </div>
             </div>
+            <br>
             <div class="container__body__general">
                 <div class="container__body__item">
-
-
-
                     <label for="tentacles">Ruta:</label>
                     <input formControlName="ruta" type="text" id="tentacles" name="tentacles">
                     <div class="alert__danger" *ngIf="ruta.invalid && (ruta.dirty || ruta.touched)">
@@ -70,11 +87,9 @@
                     </div>
 
                 </div>
-            </div>
-
-
-            <div class="container__body__general">
                 <div class="container__body__item">
+
+
 
                     <label for="tentacles"> Observaciones:</label>
                     <input formControlName="observasiones" type="text" id="tentacles" name="tentacles">
@@ -89,7 +104,10 @@
 
                 </div>
             </div>
+
+
         </div>
+
 
         <br>
 
@@ -101,4 +119,69 @@
 
         </div>
     </form>
+</div>
+
+
+<ng-template #modalTemplate>
+    <div class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalle</h5>
+                    <button type="button" class="close" (click)="closeModal()">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <form [formGroup]="formPedidoDetalle">
+                    <div class="modal-body">
+                        <div style="width: 375px;" class="select">
+                            <select name="format" id="format" formControlName="fk_tbl_guardia_cedula">
+                                <option *ngFor="let c of guardias" [value]="c.cedula">{{c.nombre +'
+                                    '+c.apellido}}
+                                </option>
+                            </select>
+
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <input style="width: 100%;" type="date" formControlName="fecha_entrega" placeholder=""
+                                class="form-control">
+                            <!-- <div class="alert__danger"
+                            *ngIf="fecha_entrega.invalid && (fecha_entrega.dirty || fecha_entrega.touched)">
+                            <div class="container-error-message">
+                                La fecha de entrega es requerida
+                            </div>
+                        </div> -->
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <input style="width: 100%;" type="text" name="Nombres Completos"
+                                formControlName="numero_acta" placeholder="Ingrese el número de acta"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+
+                            <input style="width: 100%;" type="text" name="Nombres Completos"
+                                formControlName="observacionesPrestamo" placeholder="Ingrese las observaciones"
+                                class="form-control">
+                        </div>
+                        <ng-content>
+                        </ng-content>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+                        <button type="button" class="btn btn-primary"
+                            (click)="crearDespachoPedido(formPedidoDetalle.value)">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+<div *ngIf="showModal">
+    <ng-template [ngTemplateOutlet]="modalTemplate"></ng-template>
 </div>

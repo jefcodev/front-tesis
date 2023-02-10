@@ -22,10 +22,12 @@
     "angular-local-storage": "^0.7.1",
     "font-awesome": "^4.7.0",
     "moment": "^2.29.4",
+    "ngb-modal": "^2.0.3",
+    "ngx-bootstrap": "^10.2.0",
     "ngx-cookie-service": "^15.0.0",
     "ngx-localstorage": "^4.0.0",
     "rxjs": "~7.4.0",
-    "sweetalert2": "^11.6.16",
+    "sweetalert2": "^11.7.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

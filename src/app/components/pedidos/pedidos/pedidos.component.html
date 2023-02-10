@@ -2,12 +2,29 @@
     <div style="text-align: center;">
         <h1>Pedidos</h1>
     </div>
+
     <button type="button" class="btn btn-primary" data-toggle="modal"
         [routerLink]="['/dashboard/pedido/compedido']">Nuevo Pedido</button>
     <br><br>
 
     <router-outlet></router-outlet><br>
-    <table class="table table-bordered table-hover bg-white" style="text-align: center;">
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item" (click)="changeActiveA()">
+            <a class="nav-link" [ngClass]="{'active':activoA==true}"
+                [routerLink]="['/dashboard/pedido/detpedido']">Pedidos</a>
+        </li>
+        <li class="nav-item" (click)="changeActiveB()">
+            <a class="nav-link" [ngClass]="{'active':activoB==true}"
+                [routerLink]="['/dashboard/pedido/detdespacho']">Despachos</a>
+        </li>
+    </ul>
+    <br>
+
+    <router-outlet></router-outlet>
+
+
+    <!-- <table class="table table-bordered table-hover bg-white" style="text-align: center;">
         <thead>
             <tr>
 
@@ -125,5 +142,5 @@
 
             </tr>
         </tbody>
-    </table>
+    </table> -->
 </div>
