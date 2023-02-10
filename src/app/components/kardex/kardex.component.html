@@ -1,12 +1,30 @@
 <div class="col-md-12">
     <div style="text-align: center;">
-        <h1>KARDEX</h1>
+        <h1 class="mb-2 text-gray-800">Kardex</h1>
     </div>
     <div style="text-align: center;">
-        <input  class="input" placeholder="Busqueda"  (ngModelChange)="search($event)" [ngModel]="src"
-        type="text">
+       <!--  <input  class="input" placeholder="Busqueda"  (ngModelChange)="search($event)" [ngModel]="src"
+        type="text"> -->
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" class="form-control bg-light small" placeholder="Buscar..." aria-label="Search" (input)="filtrarPersonas($event)" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" >
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
     </div>
-  
+
+    
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800"></h1>
+        <a  (click)="exportPdf()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generar Reporte</a>
+    </div>
+    
     <br>
     <table class="table table-bordered table-hover bg-white" style="text-align: center;">
         <thead>
@@ -27,7 +45,7 @@
 
         </thead>
         <tbody>
-            <tr *ngFor="let i of kardex">
+            <tr *ngFor="let i of personasFiltradas">
                 <td [ngClass]="{'definedColorCompra':i.movimiento==='Compra',
                 'definedColorDevolucion':i.movimiento==='Devolución',
                 'definedColorPrestamos':i.movimiento==='Préstamo',

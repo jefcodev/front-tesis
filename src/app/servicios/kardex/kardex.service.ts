@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -15,6 +16,11 @@ export class KardexService {
     let direccion = this.url + "bitacora";
     return this.http.get(direccion);
   }
+
+  obtenerPersonas(): Observable<any[]> {
+    return this.http.get<any[]>( this.url + "bitacora");
+  }
+
 
   saveBitacora(form: any) {
     // console.log(form)
