@@ -4,7 +4,9 @@ import { Component, OnInit } from '@angular/core';
 // Generar PDF
 import  jsPDF from 'jspdf';
 import * as FileSaver from 'file-saver';
-import autoTable from 'jspdf-autotable'; 
+ 
+import * as XLSX from 'xlsx';
+
 
 
 
@@ -54,6 +56,7 @@ export class KardexComponent implements OnInit {
       { field: 'accion', header: 'Acción' },
       { field: 'cantidad', header: 'Cantidad' },
       { field: 'ayudante', header: 'Ayudante' },
+      { field: 'cliente', header: 'Cliente' },
       { field: 'observacion', header: 'Observación' },
       { field: 'numero_acta', header: '# Acta' },
       { field: 'usuario', header: 'Usuario' },
@@ -100,12 +103,42 @@ export class KardexComponent implements OnInit {
     import("jspdf").then(jsPDF => {
      import("jspdf-autotable").then(x => {
          const doc = new jsPDF.default();
-         (doc as any).autoTable(this.exportColumns,this.kardex)
+         (doc as any).autoTable(this.exportColumns,this.personasFiltradas)
          window.open(doc.output('bloburl'))
      })
  })
    
  }
+
+
+ generarExcel() {
+  const kardex: {
+    ID_Bitácora: any; Fecha_Actual: any; Acción: any;
+    // Generar PDF
+    Ayudante: any; Cliente: any; Observación: any; Número_de_acta: any; Usuario: any;
+    Movimiento:any;
+  }[] = [];
+  this.personasFiltradas.forEach(registro => {
+    kardex.push({
+      ID_Bitácora: registro.id_bitacora,
+      Fecha_Actual: registro.fecha_actual,
+      Acción: registro.accion,
+      Movimiento:registro.movimiento,
+      Ayudante: registro.ayudante,
+      Cliente: registro.cliente,
+      Observación: registro.observacion,
+      Número_de_acta: registro.numero_acta,
+      Usuario: registro.usuario
+    });
+  });
+
+  const ws = XLSX.utils.json_to_sheet(kardex);
+  const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+  const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+  const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
+  const url = window.URL.createObjectURL(data);
+  XLSX.writeFile(wb, "Report.xlsx");
+}
 
 /*   generarPDF() {
     let tabla = '';
