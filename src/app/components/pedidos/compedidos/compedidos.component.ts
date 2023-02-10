@@ -6,7 +6,7 @@ import { PedidosService } from '../../../servicios/pedidos/pedidos.service';
 import { Router } from '@angular/router';
 import { PedidosComponent } from '../pedidos/pedidos.component';
 import Swal from 'sweetalert2';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 import { KardexService } from '../../../servicios/kardex/kardex.service';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from '../../../servicios/login/login.service';
