@@ -31,7 +31,6 @@
     "jspdf-autotable": "^3.5.28",
     "moment": "^2.29.4",
     "ngb-modal": "^2.0.3",
-    "ngx-bootstrap": "^10.2.0",
     "ngx-cookie-service": "^15.0.0",
     "ngx-localstorage": "^4.0.0",
     "npm": "^9.4.2",
