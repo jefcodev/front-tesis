@@ -3,22 +3,23 @@
         <h1>Pedidos</h1>
     </div>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal"
+    <button type="button" class="btn btn-primary" data-toggle="modal" 
         [routerLink]="['/dashboard/pedido/compedido']">Nuevo Pedido</button>
     <br><br>
 
-    <router-outlet></router-outlet><br>
-
-    <ul class="nav nav-tabs">
-        <li class="nav-item" (click)="changeActiveA()">
-            <a class="nav-link" [ngClass]="{'active':activoA==true}"
-                [routerLink]="['/dashboard/pedido/detpedido']">Pedidos</a>
-        </li>
-        <li class="nav-item" (click)="changeActiveB()">
-            <a class="nav-link" [ngClass]="{'active':activoB==true}"
-                [routerLink]="['/dashboard/pedido/detdespacho']">Despachos</a>
-        </li>
-    </ul>
+    <!-- <router-outlet></router-outlet><br> -->
+    <!-- <div [ngClass]="{'d-none':activoC==true}"> -->
+        <ul class="nav nav-tabs">
+            <li class="nav-item" (click)="changeActiveA()">
+                <a class="nav-link" [ngClass]="{'active':activoA==true}"
+                    [routerLink]="['/dashboard/pedido/detpedido']">Pedidos</a>
+            </li>
+            <li class="nav-item" (click)="changeActiveB()">
+                <a class="nav-link" [ngClass]="{'active':activoB==true}"
+                    [routerLink]="['/dashboard/pedido/detdespacho']">Despachos</a>
+            </li>
+        </ul>
+    <!-- </div> -->
     <br>
 
     <router-outlet></router-outlet>

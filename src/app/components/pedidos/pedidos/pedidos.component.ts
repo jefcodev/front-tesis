@@ -19,6 +19,7 @@ import { LoginService } from '../../../servicios/login/login.service';
 export class PedidosComponent implements OnInit {
   activoA: boolean | undefined;
   activoB: boolean | undefined;
+  activoC: boolean | undefined;
   changeActiveA() {
     this.activoA = true;
     this.activoB = false;
@@ -27,6 +28,16 @@ export class PedidosComponent implements OnInit {
   changeActiveB() {
     this.activoA = false;
     this.activoB = true;
+
+  }
+  changeActiveC() {
+   
+    this.activoC = true;
+
+  }
+  changeCanel() {
+   
+    this.activoC = false;
 
   }
 
@@ -66,6 +77,7 @@ export class PedidosComponent implements OnInit {
     // this.showAllClients();
     // this.fecha="2000-03-20";
     this.definirUser();
+    this.activoC = true;
   }
   userLo: string = "";
   definirUser() {
