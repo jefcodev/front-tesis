@@ -20,7 +20,7 @@ export class PrestamoTinasService {
     return this.http.get(direccion);
   }
   getAllPrestamoss() {
-    let direccion = this.url + "prestamoss";
+    let direccion = this.url + "prestamosss";
     return this.http.get(direccion);
   }
 

@@ -33,7 +33,7 @@ export class HomeAComponent implements OnInit {
     this.prestamosTinasServices.getAllPrestamoss().subscribe(
       (prestamosHome: any) => {
         this.prestamosHome = prestamosHome
-        console.log("prestamos: ", prestamosHome)
+        // console.log("prestamos: ", prestamosHome)
 
       },
       (error) => console.log(error)

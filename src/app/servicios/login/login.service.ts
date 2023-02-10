@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class LoginService {
-  url = environment.base_url; 
+  url = environment.base_url;
   constructor(private http: HttpClient) { }
 
   // getAllAutoridades() {
@@ -23,6 +23,11 @@ export class LoginService {
     let direccion = this.url + "user/" + token;
     // alert(direccion)
     return this.http.post(direccion, null);
+  }
+
+  getnumPrestamos() {
+    let direccion = this.url + "getnumPrestamos";
+    return this.http.get(direccion);
   }
   // updateAutoridad(form: any) {
   //   let direccion = this.url + "autoridades";

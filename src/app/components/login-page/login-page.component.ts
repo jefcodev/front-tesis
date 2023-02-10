@@ -23,7 +23,7 @@ export class LoginPageComponent implements OnInit {
     clave_usuario: new FormControl(''),
 
   });
-  constructor(private loginService: LoginService,  private cookieService: CookieService,private router: Router) { }
+  constructor(private loginService: LoginService, private cookieService: CookieService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -39,8 +39,20 @@ export class LoginPageComponent implements OnInit {
         this.estado = false;
         localStorage.setItem('tokenIC', data.token)
         this.cookieService.set('tokenIC', data.token, 4, '/');
-        this.showModalMore('center', 'success', 'Bienvenido '+data.usuario, false, 2000);
+        this.showModalMore('center', 'success', 'Bienvenido ' + data.usuario, false, 2000);
         this.router.navigate(['/dashboard/homeA']);
+
+        this.loginService.getnumPrestamos().subscribe((data: any) => {
+          let numberPrestamos = parseInt(data[0].count)
+          if(numberPrestamos>0 && numberPrestamos<2){
+            this.ShowModal('Información', 'Tiene ' +data[0].count+ ' cliente que está retrasado en la entrega de los huacales', 'info');
+            // this.showModalMore('center', 'info', 'Tiene ' +data[0].count+ ' clientes que están retrasados en la entrega de los huacales', false, 2000);
+
+          }else if(numberPrestamos>1){
+            this.ShowModal('Información', 'Tiene ' +data[0].count+ ' clientes que están retrasados en la entrega de los huacales', 'info');
+
+          }
+        })
       }
     })
 

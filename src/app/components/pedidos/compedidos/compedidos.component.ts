@@ -129,7 +129,7 @@ export class CompedidosComponent implements OnInit {
   }
   crearDespachoPedido(form: any) {
 
-    if (this.formPedido.valid) {
+    if (this.formPedidoDetalle.valid) {
 
 
       let cantidadLibras = parseFloat(this.cantidad_librasV)
@@ -182,7 +182,7 @@ export class CompedidosComponent implements OnInit {
       })
 
       this.pedidosService.saveOrders(this.formPedidoFinal.value).subscribe(data => {
-        this.router.navigateByUrl("/dashboard/pedido");
+        this.router.navigateByUrl("/dashboard/pedido/detpedido");
         this.pedidosComponent.showAllOrders();
 
         this.formBitacora.setValue({
@@ -334,7 +334,7 @@ export class CompedidosComponent implements OnInit {
 
 
         this.pedidosService.saveOrders(this.formPedidoResult.value).subscribe(data => {
-          this.router.navigateByUrl("/dashboard/pedido");
+          this.router.navigateByUrl("/dashboard/pedido/detpedido");
           this.pedidosComponent.showAllOrders();
           this.showModalMore('center', 'success', 'Pedido registrado exitosamente', false, 2000);
 

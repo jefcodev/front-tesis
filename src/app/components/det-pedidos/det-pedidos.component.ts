@@ -194,19 +194,22 @@ export class DetPedidosComponent implements OnInit {
         Swal.fire({
           title: 'El cliente seleccionado tiene prestado ' + data[0].numero_tinas + ' huacales ¿Desea continuar?',
           showDenyButton: true,
-          showCancelButton: true,
+          // showCancelButton: true,
           confirmButtonText: 'Continuar',
           denyButtonText: `No continuar`,
         }).then((result) => {
 
           if (result.isConfirmed) {
+
             this.showModal = true;
 
           } else if (result.isDenied) {
-            this.ShowModal('Información', 'Proceso finalizado', 'info');
-            this.showModal = false;
             window.location.reload();
+            this.showModal = false;
+
             this.router.navigate(['/', 'dashboard/pedido/detpedido']);
+
+            // this.ShowModal('Información', 'Proceso finalizado', 'info');
 
           }
         })
@@ -217,104 +220,105 @@ export class DetPedidosComponent implements OnInit {
     })
 
 
-
-
-
   }
 
   crearDespachoPrestamo(form: any) {
-    this.despachosService.getById(this.idpedidoV).subscribe(
-      (pedido: any) => {
-        // console.log("asda")
-        // console.log(pedido)
-        // console.log(pedido[0].num_pollos)
-        // console.log(pedido[0].cantidad_libras_p)
+    if (this.formPedidoDetalle.valid) {
+      this.despachosService.getById(this.idpedidoV).subscribe(
+        (pedido: any) => {
+          // console.log("asda")
+          // console.log(pedido)
+          // console.log(pedido[0].num_pollos)
+          // console.log(pedido[0].cantidad_libras_p)
 
-        let cantidadLibras = parseFloat(pedido[0].cantidad_libras_p)
-        let numeroPollos = parseFloat(pedido[0].num_pollos)
-        let totalLibras = numeroPollos * cantidadLibras;
+          let cantidadLibras = parseFloat(pedido[0].cantidad_libras_p)
+          let numeroPollos = parseFloat(pedido[0].num_pollos)
+          let totalLibras = numeroPollos * cantidadLibras;
 
-        totalLibras = parseFloat(totalLibras.toFixed(2))
+          totalLibras = parseFloat(totalLibras.toFixed(2))
 
-        // alert(totalLibras)
-        let resultTinas: number;
-        let tinasFInales;
+          // alert(totalLibras)
+          let resultTinas: number;
+          let tinasFInales;
 
-        if (cantidadLibras < 3.7) {
+          if (cantidadLibras < 3.7) {
 
-          resultTinas = numeroPollos / 15;
-          tinasFInales = Math.ceil(resultTinas);
-
-
-          //15
-        } else if (cantidadLibras > 3.7 && cantidadLibras < 5.4) {
-
-          // 12
-          resultTinas = numeroPollos / 12;
-          tinasFInales = Math.ceil(resultTinas);
+            resultTinas = numeroPollos / 15;
+            tinasFInales = Math.ceil(resultTinas);
 
 
-        } else if (cantidadLibras > 5.4) {
+            //15
+          } else if (cantidadLibras > 3.7 && cantidadLibras < 5.4) {
 
-          // 10
-          resultTinas = numeroPollos / 10;
-          tinasFInales = Math.ceil(resultTinas);
+            // 12
+            resultTinas = numeroPollos / 12;
+            tinasFInales = Math.ceil(resultTinas);
 
 
-        }
+          } else if (cantidadLibras > 5.4) {
 
-        this.formPedidoDetalleFinal.setValue({
-          id_pedido: this.idpedidoV,
-          fecha_actual: new Date,
-          numero_tinas: tinasFInales,
-          fecha_entrega: form.fecha_entrega,
-          fk_tbl_guardia_cedula: form.fk_tbl_guardia_cedula,
-          numero_acta: form.numero_acta,
-          observacionesPrestamo: form.observacionesPrestamo,
-        })
+            // 10
+            resultTinas = numeroPollos / 10;
+            tinasFInales = Math.ceil(resultTinas);
 
-        this.despachosService.saveDespacho(this.formPedidoDetalleFinal.value).subscribe(data => {
-          this.formBitacora.setValue({
+
+          }
+
+          this.formPedidoDetalleFinal.setValue({
+            id_pedido: this.idpedidoV,
             fecha_actual: new Date,
-            movimiento: "Préstamo",
-            accion: "Crear",
-            cantidad: totalLibras,
-            ayudante: form.fk_tbl_guardia_cedula,
-            cliente: pedido[0].fk_tbl_cliente_cedula,
-            observacion: form.observacionesPrestamo,
+            numero_tinas: tinasFInales,
+            fecha_entrega: form.fecha_entrega,
+            fk_tbl_guardia_cedula: form.fk_tbl_guardia_cedula,
             numero_acta: form.numero_acta,
-            usuario: this.userLo,
-          })
-          console.log(this.formBitacora.value)
-
-          this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
-            // alert("hizo a")
+            observacionesPrestamo: form.observacionesPrestamo,
           })
 
-          this.formBitacora.setValue({
-            fecha_actual: new Date,
-            movimiento: "Despacho",
-            accion: "Crear",
-            cantidad: totalLibras,
-            ayudante: form.fk_tbl_guardia_cedula,
-            cliente: pedido[0].fk_tbl_cliente_cedula,
-            observacion: pedido[0].observasiones,
-            numero_acta: form.numero_acta,
-            usuario: this.userLo,
+          this.despachosService.saveDespacho(this.formPedidoDetalleFinal.value).subscribe(data => {
+            this.formBitacora.setValue({
+              fecha_actual: new Date,
+              movimiento: "Préstamo",
+              accion: "Crear",
+              cantidad: totalLibras,
+              ayudante: form.fk_tbl_guardia_cedula,
+              cliente: pedido[0].fk_tbl_cliente_cedula,
+              observacion: form.observacionesPrestamo,
+              numero_acta: form.numero_acta,
+              usuario: this.userLo,
+            })
+            console.log(this.formBitacora.value)
+
+            this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+              // alert("hizo a")
+            })
+
+            this.formBitacora.setValue({
+              fecha_actual: new Date,
+              movimiento: "Despacho",
+              accion: "Crear",
+              cantidad: totalLibras,
+              ayudante: form.fk_tbl_guardia_cedula,
+              cliente: pedido[0].fk_tbl_cliente_cedula,
+              observacion: pedido[0].observasiones,
+              numero_acta: form.numero_acta,
+              usuario: this.userLo,
+            })
+
+            this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+            })
+            this.showModalMore('center', 'success', 'Despacho realizado exitosamente', false, 2000);
+            this.showAllOrders();
+
           })
 
-          this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
-          })
-          this.showModalMore('center', 'success', 'Despacho realizado exitosamente', false, 2000);
-          this.showAllOrders();
-
-        })
 
 
-
-      },
-      (error) => console.log(error)
-    );
+        },
+        (error) => console.log(error)
+      );
+    } else {
+      this.ShowModal('Pedido', 'Algún campo se encuentra vacío. Vuelva a intentar', 'error');
+    }
 
   }
 
