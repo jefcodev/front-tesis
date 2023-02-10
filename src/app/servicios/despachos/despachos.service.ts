@@ -8,13 +8,18 @@ import { environment } from 'src/environments/environment';
 })
 export class DespachosService {
 
-  url = environment.base_url; 
+  url = environment.base_url;
   constructor(private http: HttpClient) { }
 
   getAllDespachos() {
     let direccion = this.url + "despachos";
     return this.http.get(direccion);
   }
+  getById(id_pedido: any) {
+    let direccion = this.url + "getpedido/" + id_pedido;
+    return this.http.get(direccion);
+  }
+  
   saveDespacho(form: any) {
     let direccion = this.url + "despachos";
     return this.http.post(direccion, form);

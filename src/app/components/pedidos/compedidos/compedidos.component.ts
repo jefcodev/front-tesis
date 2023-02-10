@@ -66,6 +66,7 @@ export class CompedidosComponent implements OnInit {
     fk_tbl_cliente_cedula: new FormControl('', [Validators.required]),
     accion: new FormControl('', [Validators.required]),
     numero_pollos: new FormControl('', [Validators.required]),
+
     // fk_tbl_guardia_cedula: new FormControl('', [Validators.required]),
     // numero_acta: new FormControl('', [Validators.required]),
     // observacionesPrestamo: new FormControl('', [Validators.required])
@@ -101,7 +102,9 @@ export class CompedidosComponent implements OnInit {
     ruta: new FormControl('', [Validators.required]),
     observasiones: new FormControl(''),
     fk_tbl_cliente_cedula: new FormControl('', [Validators.required]),
-    accion: new FormControl('', [Validators.required])
+    accion: new FormControl('', [Validators.required]),
+    numero_pollos: new FormControl('', [Validators.required]),
+    cantidad_libras_p: new FormControl('', [Validators.required]),
   })
 
 
@@ -136,7 +139,7 @@ export class CompedidosComponent implements OnInit {
 
       totalLibras = parseFloat(totalLibras.toFixed(2))
 
-      alert(totalLibras)
+      // alert(totalLibras)
       let resultTinas: number;
       let tinasFInales;
 
@@ -253,16 +256,53 @@ export class CompedidosComponent implements OnInit {
     if (form.accion == 'true') {
       if (this.formPedido.valid) {
 
-        this.showModal = true;
-        this.showAllGuards();
-        this.fecha_pedidoV = form.fecha_pedido;
-        this.cantidad_librasV = form.cantidad_libras
-        this.rutaV = form.ruta
-        this.fk_tbl_cliente_cedulaV = form.fk_tbl_cliente_cedula
-        this.accionV = form.accion
-        this.cantidadPollosV = form.numero_pollos
+        this.pedidosService.getnumTinas(form.fk_tbl_cliente_cedula).subscribe((data: any) => {
+          let numtinas = parseInt(data[0].numero_tinas);
+          if (numtinas > 0) {
+            Swal.fire({
+              title: 'El cliente seleccionado tiene prestado ' + data[0].numero_tinas + ' huacales ¿Desea continuar?',
+              showDenyButton: true,
+              showCancelButton: true,
+              confirmButtonText: 'Continuar',
+              denyButtonText: `No continuar`,
+            }).then((result) => {
 
-        this.observacionesV = form.observasiones
+              if (result.isConfirmed) {
+                this.showModal = true;
+                this.showAllGuards();
+                this.fecha_pedidoV = form.fecha_pedido;
+                this.cantidad_librasV = form.cantidad_libras
+                this.rutaV = form.ruta
+                this.fk_tbl_cliente_cedulaV = form.fk_tbl_cliente_cedula
+                this.accionV = form.accion
+                this.cantidadPollosV = form.numero_pollos
+
+                this.observacionesV = form.observasiones
+              } else if (result.isDenied) {
+                this.ShowModal('Información', 'Proceso finalizado', 'info');
+              }
+            })
+
+          } else {
+            this.showModal = true;
+            this.showAllGuards();
+            this.fecha_pedidoV = form.fecha_pedido;
+            this.cantidad_librasV = form.cantidad_libras
+            this.rutaV = form.ruta
+            this.fk_tbl_cliente_cedulaV = form.fk_tbl_cliente_cedula
+            this.accionV = form.accion
+            this.cantidadPollosV = form.numero_pollos
+
+            this.observacionesV = form.observasiones
+          }
+
+
+
+
+
+
+        })
+
 
       } else {
         this.ShowModal('Pedido', 'Algún campo se encuentra vacío', 'error');
@@ -285,6 +325,8 @@ export class CompedidosComponent implements OnInit {
           observasiones: form.observasiones,
           fk_tbl_cliente_cedula: form.fk_tbl_cliente_cedula,
           accion: form.accion,
+          numero_pollos: form.numero_pollos,
+          cantidad_libras_p: form.cantidad_libras
 
         })
         console.log(this.formPedidoResult)

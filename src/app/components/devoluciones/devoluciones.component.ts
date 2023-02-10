@@ -75,7 +75,7 @@ export class DevolucionesComponent implements OnInit {
   }
 
   showAllPrestamos() {
-    this.prestamoTinasServices.getAllPrestamos().subscribe(
+    this.prestamoTinasServices.getAllPrestamoss().subscribe(
       (prestamos: any) => {
         this.prestamos = prestamos
         console.log(this.prestamos)

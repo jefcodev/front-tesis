@@ -29,4 +29,13 @@ export class PedidosService {
     let direccion = this.url + "pedidos";
     return this.http.put(direccion, form);
   }
+
+  getnumTinas(id_cliente: any) {
+    let direccion = this.url + "gettinas/" + id_cliente;
+    return this.http.get(direccion);
+  }
+  getnumTinasP(id_pedido: any) {
+    let direccion = this.url + "gettinasp/" + id_pedido;
+    return this.http.get(direccion);
+  }
 }

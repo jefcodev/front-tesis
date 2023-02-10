@@ -16,6 +16,7 @@
     <tbody>
         <tr *ngFor="let i of orders">
             <td>
+
                 {{i.id_pedido}}
             </td>
             <td>
@@ -41,6 +42,10 @@
                 <a class="btn btn-success" data-toggle="modal" data-target="#editarPedido"
                     (click)="getDataOrders(i.id_pedido,i.fecha_entrega,i.cantidad_libras, i.ruta, i.observasiones, i.client)">
                     <i class="fas fa-edit"></i>
+                </a>
+                <a class="btn btn-primary" (click)="getDataPedido(i.id_pedido)" data-toggle="modal"
+                    data-target="#despacho">
+                    <i class="fas fa-car"> Despachar</i>
                 </a>
 
                 <div class="modal fade" id="editarPedido" tabindex="-1" role="dialog"
@@ -88,10 +93,8 @@
                                                 La cantidad es necesaria
                                             </div>
                                         </div> <br>
-                                        <input type="text" formControlName="ruta" placeholder=""
-                                            class="form-control">
-                                        <div class="alert__danger"
-                                            *ngIf="ruta.invalid && (ruta.dirty || ruta.touched)">
+                                        <input type="text" formControlName="ruta" placeholder="" class="form-control">
+                                        <div class="alert__danger" *ngIf="ruta.invalid && (ruta.dirty || ruta.touched)">
                                             <div class="container-error-message">
                                                 La ruta es necesaria
                                             </div>
@@ -114,6 +117,141 @@
                 </div>
             </td>
 
+
+
         </tr>
     </tbody>
 </table>
+
+
+
+
+<!-- <div class="modal fade" id="despacho" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width: 450px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formPedidoDetalle">
+                    <div class="modal-body">
+                        <div style="width: 385px;" class="select">
+                            <select name="format" id="format" formControlName="fk_tbl_guardia_cedula">
+                                <option *ngFor="let c of guardias" [value]="c.cedula">{{c.nombre +'
+                                    '+c.apellido}}
+                                </option>
+                            </select>
+
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <input style="width: 100%;" type="date" formControlName="fecha_entrega" placeholder=""
+                                class="form-control"> -->
+                            <!-- <div class="alert__danger"
+                        *ngIf="fecha_entrega.invalid && (fecha_entrega.dirty || fecha_entrega.touched)">
+                        <div class="container-error-message">
+                            La fecha de entrega es requerida
+                        </div>
+                    </div> -->
+
+                        <!-- </div>
+
+                        <div class="form-group">
+
+                            <input style="width: 100%;" type="text" name="Nombres Completos"
+                                formControlName="numero_acta" placeholder="Ingrese el número de acta"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+
+                            <input style="width: 100%;" type="text" name="Nombres Completos"
+                                formControlName="observacionesPrestamo" placeholder="Ingrese las observaciones"
+                                class="form-control">
+                        </div>
+                        <ng-content>
+                        </ng-content>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" 
+                            data-dismiss="modal" (click)="crearDespachoPrestamo(formPedidoDetalle.value)">Despachar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+<ng-template #modalTemplate>
+    <div class="modal fade" id="despacho" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width: 450px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formPedidoDetalle">
+                    <div class="modal-body">
+                        <div style="width: 385px;" class="select">
+                            <select name="format" id="format" formControlName="fk_tbl_guardia_cedula">
+                                <option *ngFor="let c of guardias" [value]="c.cedula">{{c.nombre +'
+                                    '+c.apellido}}
+                                </option>
+                            </select>
+
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <input style="width: 100%;" type="date" formControlName="fecha_entrega" placeholder=""
+                                class="form-control">
+                            <!-- <div class="alert__danger"
+                        *ngIf="fecha_entrega.invalid && (fecha_entrega.dirty || fecha_entrega.touched)">
+                        <div class="container-error-message">
+                            La fecha de entrega es requerida
+                        </div>
+                    </div> -->
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <input style="width: 100%;" type="text" name="Nombres Completos"
+                                formControlName="numero_acta" placeholder="Ingrese el número de acta"
+                                class="form-control">
+                        </div>
+                        <div class="form-group">
+
+                            <input style="width: 100%;" type="text" name="Nombres Completos"
+                                formControlName="observacionesPrestamo" placeholder="Ingrese las observaciones"
+                                class="form-control">
+                        </div>
+                        <ng-content>
+                        </ng-content>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" 
+                            data-dismiss="modal" (click)="crearDespachoPrestamo(formPedidoDetalle.value)">Despachar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</ng-template>
+
+
+<div *ngIf="showModal">
+    <ng-template [ngTemplateOutlet]="modalTemplate"></ng-template>
+</div>
