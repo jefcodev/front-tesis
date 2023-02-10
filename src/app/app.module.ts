@@ -4,11 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ClientesComponent } from './components/clientes/clientes.component';
@@ -32,6 +32,9 @@ import { HomeAComponent } from './components/homeA/home-a/home-a.component';
 import { CompcompraComponent } from './components/compras/compcompra/compcompra.component';
 import { KardexComponent } from './components/kardex/kardex.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { ModalpedidoComponent } from './components/modalpedido/modalpedido.component';
+import { DetPedidosComponent } from './components/det-pedidos/det-pedidos.component';
+import { DetDespachoComponent } from './components/det-despacho/det-despacho.component';
 // import {
 //   MatDatepickerModule,
 //   DateAdapter,
@@ -67,6 +70,9 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
     CompcompraComponent,
     KardexComponent,
     UsuariosComponent,
+    ModalpedidoComponent,
+    DetPedidosComponent,
+    DetDespachoComponent,
     // CommonModule
   ],
   imports: [
@@ -77,12 +83,10 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
     ReactiveFormsModule,
     RouterModule
   ],
-  
+
   providers: [
-    // { provide: MAT_DATE_LOCALE, useValue: 'es-CL' },
-    // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    // {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
-],
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

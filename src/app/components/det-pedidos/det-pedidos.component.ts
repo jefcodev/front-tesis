@@ -1,25 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ModelPedidosI } from 'src/app/modelos/modelo.pedidos';
 import { PedidosService } from 'src/app/servicios/pedidos/pedidos.service';
-import { ModelClientesI } from '../../../modelos/modelo.clientes';
+import { ModelClientesI } from 'src/app/modelos/modelo.clientes';
 import { ClientesService } from 'src/app/servicios/clientes/clientes.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { identifierName } from '@angular/compiler/public_api';
 import Swal from 'sweetalert2';
-import { KardexService } from '../../../servicios/kardex/kardex.service';
+import { KardexService } from 'src/app/servicios/kardex/kardex.service';
 import { CookieService } from 'ngx-cookie-service';
-import { LoginService } from '../../../servicios/login/login.service';
+import { LoginService } from 'src/app/servicios/login/login.service';
 
 
 @Component({
-  selector: 'app-pedidos',
-  templateUrl: './pedidos.component.html',
-  styleUrls: ['./pedidos.component.scss']
+  selector: 'app-det-pedidos',
+  templateUrl: './det-pedidos.component.html',
+  styleUrls: ['./det-pedidos.component.scss']
 })
-export class PedidosComponent implements OnInit {
+export class DetPedidosComponent implements OnInit {
   activoA: boolean | undefined;
   activoB: boolean | undefined;
-  activoC: boolean | undefined;
   changeActiveA() {
     this.activoA = true;
     this.activoB = false;
@@ -28,16 +27,6 @@ export class PedidosComponent implements OnInit {
   changeActiveB() {
     this.activoA = false;
     this.activoB = true;
-
-  }
-  changeActiveC() {
-   
-    this.activoC = true;
-
-  }
-  changeCanel() {
-   
-    this.activoC = false;
 
   }
 
@@ -77,7 +66,6 @@ export class PedidosComponent implements OnInit {
     // this.showAllClients();
     // this.fecha="2000-03-20";
     this.definirUser();
-    this.activoC = true;
   }
   userLo: string = "";
   definirUser() {
