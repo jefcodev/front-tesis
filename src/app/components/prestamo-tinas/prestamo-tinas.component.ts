@@ -28,6 +28,12 @@ export class PrestamoTinasComponent implements OnInit {
     usuario: new FormControl('')
   });
 
+  formDevolucion = new FormGroup({
+    id_prestamo_tinas: new FormControl(''),
+    fecha: new FormControl(new Date),
+
+  });
+
   prestamoTinas: ModelTinasI[] = [];
   clientes: ModelClientesI[] = [];
   fecha: "2000-03-20" | undefined;
@@ -144,4 +150,18 @@ export class PrestamoTinasComponent implements OnInit {
     });
   }
 
+
+
+  DevolverTinas(id_prestamo_tinas: any) {
+    this.formDevolucion.setValue({
+      id_prestamo_tinas: id_prestamo_tinas,
+      fecha: new Date
+    })
+    this.prestamoTinasService.saveDevolucion(this.formDevolucion.value).subscribe((data: any) => {
+      this.showModalMore('center', 'success', 'Devolución registrada con éxito', false, 1500);
+      this.showAllPrestamo();
+
+    })
+    console.log(this.formDevolucion.value)
+  }
 }

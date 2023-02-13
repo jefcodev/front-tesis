@@ -52,6 +52,10 @@
                         (click)="getDataPrestamos(i.id_prestamo_tinas,i.fecha_prestamo,i.fecha_entrega,i.numero_tinas,i.observasiones,i.numero_acta,i.cliente)">
                         <i class="fas fa-edit"></i>
                     </a>
+                    <a class="btn btn-secondary"
+                        (click)="DevolverTinas(i.id_prestamo_tinas)">
+                        <i class="fas fa-edit"></i>Devolver
+                    </a>
                     <div class="modal fade" id="editarPedido" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">

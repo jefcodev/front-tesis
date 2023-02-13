@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { LoginService } from '../../servicios/login/login.service';
+import { TinasService } from '../../servicios/tinas/tinas.service';
 
 @Component({
   selector: 'app-login-page',
@@ -23,35 +24,61 @@ export class LoginPageComponent implements OnInit {
     clave_usuario: new FormControl(''),
 
   });
-  constructor(private loginService: LoginService, private cookieService: CookieService, private router: Router) { }
+  constructor(private loginService: LoginService, private cookieService: CookieService, private router: Router, private tinasServices: TinasService) { }
 
   ngOnInit(): void {
 
   }
   public Login(form: any) {
     this.estado = false;
-    this.loginService.Login(form).subscribe((data: any) => {
+    this.loginService.Login(form).subscribe((datau: any) => {
 
-      if (data.status == 'Error') {
+      if (datau.status == 'Error') {
         this.estado = true;
-        this.resp = data.resp;
+        this.resp = datau.resp;
       } else {
         this.estado = false;
-        localStorage.setItem('tokenIC', data.token)
-        this.cookieService.set('tokenIC', data.token, 4, '/');
-        this.showModalMore('center', 'success', 'Bienvenido ' + data.usuario, false, 2000);
+        localStorage.setItem('tokenIC', datau.token)
+        this.cookieService.set('tokenIC', datau.token, 4, '/');
+
         this.router.navigate(['/dashboard/homeA']);
 
         this.loginService.getnumPrestamos().subscribe((data: any) => {
           let numberPrestamos = parseInt(data[0].count)
-          if(numberPrestamos>0 && numberPrestamos<2){
-            this.ShowModal('Información', 'Tiene ' +data[0].count+ ' cliente que está retrasado en la entrega de los huacales', 'info');
-            // this.showModalMore('center', 'info', 'Tiene ' +data[0].count+ ' clientes que están retrasados en la entrega de los huacales', false, 2000);
+          if (data[0].count > 0) {
+            this.tinasServices.getAllTinas().subscribe((datas: any) => {
 
-          }else if(numberPrestamos>1){
-            this.ShowModal('Información', 'Tiene ' +data[0].count+ ' clientes que están retrasados en la entrega de los huacales', 'info');
+              // console.log(datas[0].stock)
+              if (datas[0].stock < 100) {
+                if (numberPrestamos > 0 && numberPrestamos < 2) {
+                  this.ShowModal('Información', 'Tiene ' + data[0].count + ' cliente que está retrasado en la entrega de los huacales. Además dispone menos de 100 huacales', 'info');
 
+                } else if (numberPrestamos > 1) {
+                  this.ShowModal('Información', 'Tiene ' + data[0].count + ' clientes que están retrasados en la entrega de los huacales. Además dispone menos de 100 huacales /n  asdasdad', 'info');
+
+                }
+
+              } else {
+                if (numberPrestamos > 0 && numberPrestamos < 2) {
+                  this.ShowModal('Información', 'Tiene ' + data[0].count + ' cliente que está retrasado en la entrega de los huacales', 'info');
+
+                } else if (numberPrestamos > 1) {
+                  this.ShowModal('Información', 'Tiene ' + data[0].count + ' clientes que están retrasados en la entrega de los huacales', 'info');
+
+                }
+              }
+
+
+
+            })
+          } else {
+            this.showModalMore('center', 'success', 'Bienvenido ' + datau.usuario, false, 2000);
           }
+
+
+
+
+
         })
       }
     })
