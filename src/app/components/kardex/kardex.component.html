@@ -59,7 +59,7 @@
                 'definedColorDespacho':i.movimiento==='Despacho',
                 'definedColorPedidos':i.movimiento==='Pedido',
                 'definedColorRecicladas':i.movimiento==='Recicladas'}">
-                    {{i.fecha_actual | date:"yyyy-MM-dd"}}
+                    {{i.fecha_actual | date:'dd-MMM-yyyy':'UTC'}}
                 </td>
                 <td [ngClass]="{'definedColorCompra':i.movimiento==='Compra',
                     'definedColorDevolucion':i.movimiento==='Devolución',

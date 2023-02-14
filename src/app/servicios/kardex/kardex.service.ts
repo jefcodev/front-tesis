@@ -12,11 +12,13 @@ export class KardexService {
   url = environment.base_url; 
   constructor(private http: HttpClient) { }
 
+  // JSON
   getAllBitacora() {
     let direccion = this.url + "bitacora";
     return this.http.get(direccion);
   }
 
+  // array
   obtenerPersonas(): Observable<any[]> {
     return this.http.get<any[]>( this.url + "bitacora");
   }

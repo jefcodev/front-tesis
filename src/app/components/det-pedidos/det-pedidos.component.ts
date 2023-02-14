@@ -15,6 +15,7 @@ import { DespachosService } from '../../servicios/despachos/despachos.service';
 import { Router } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-det-pedidos',
   templateUrl: './det-pedidos.component.html',
@@ -24,6 +25,7 @@ export class DetPedidosComponent implements OnInit {
   idpedidoV: string = "";
   activoA: boolean | undefined;
   activoB: boolean | undefined;
+  fechaOriginal: Date = new Date();
   changeActiveA() {
     this.activoA = true;
     this.activoB = false;
@@ -63,6 +65,7 @@ export class DetPedidosComponent implements OnInit {
     fk_tbl_cliente_cedula: new FormControl('', [Validators.required])
   });
 
+ 
 
   constructor(private router: Router, private pedidosService: PedidosService, private guardiasService: GuardiasService, private loginService: LoginService, private cookieService: CookieService, private pedidoServices: PedidosService,
     private clientesService: ClientesService, private dexServices: KardexService, private despachosService: DespachosService) { }
@@ -92,8 +95,11 @@ export class DetPedidosComponent implements OnInit {
   showAllOrders() {
     this.pedidoServices.getAllOrders().subscribe(
       (orders: any) => {
-        this.orders = orders
 
+        this.orders = orders;
+        this.fechaOriginal = new Date(orders.fecha_actual)
+        this.fechaOriginal.setHours(this.fechaOriginal.getHours() + 5);
+        console.log(orders)
 
       },
       (error) => console.log(error)

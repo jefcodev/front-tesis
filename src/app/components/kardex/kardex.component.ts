@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 // Generar PDF
 import  jsPDF from 'jspdf';
 import * as FileSaver from 'file-saver';
- 
+ // Generar Excel
 import * as XLSX from 'xlsx';
 
 

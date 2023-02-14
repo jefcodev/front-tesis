@@ -33,7 +33,7 @@ export class ComprasComponent implements OnInit {
   formEditCompras = new FormGroup({
     id_compras: new FormControl(''),
     fecha: new FormControl('', [Validators.required]),
-    numero_acta: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]*$/)]),
+    numero_acta: new FormControl('', [Validators.required]),
     cantidad: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]*$/)]),
     observacion: new FormControl(''),
     fk_tbl_autoridades_id: new FormControl('', [Validators.required]),

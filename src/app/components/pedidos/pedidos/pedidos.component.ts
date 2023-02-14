@@ -99,8 +99,6 @@ export class PedidosComponent implements OnInit {
     this.pedidoServices.getAllOrders().subscribe(
       (orders: any) => {
         this.orders = orders
-
-
       },
       (error) => console.log(error)
     );

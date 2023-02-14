@@ -2,8 +2,8 @@
     <div style="text-align: center;">
         <h1>Devoluciones</h1>
     </div>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearCliente">Nueva
-        devolución</button>
+    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearCliente">Nueva
+        devolución</button> -->
     <br><br>
     <table class="table table-bordered table-hover bg-white" style="text-align: center;">
         <thead>
@@ -22,8 +22,11 @@
         </thead>
         <tbody>
             <tr *ngFor="let i of devoluciones">
-                <td>
+                <td >
                     {{i.id}}
+                </td>
+                <td>
+                    {{i.fecha| date:'dd-MMM-yyyy':'UTC'}}
                 </td>
                 <td>
                     {{i.cantidad}}
@@ -31,9 +34,7 @@
                 <td>
                     {{i.observacion}}
                 </td>
-                <td>
-                    {{i.fecha| date:"yyyy-MM-dd"}}
-                </td>
+                
                 <td>
                     {{i.cliente}}
                 </td>
