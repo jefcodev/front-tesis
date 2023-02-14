@@ -56,6 +56,7 @@
                             </div>
                             <div class="modal-body">
                                 <form [formGroup]="formDespacho">
+                                    <h6>Cliente</h6>
                                     <div class="select">
                                         <select name="format" id="format" formControlName="fk_tbl_cliente_cedula">
                                             <option *ngFor="let c of clientes" [value]="c.cedula">{{c.nombre +'
@@ -71,6 +72,7 @@
                                         </div>
                                     </div>
                                     <br>
+                                    <h6>Ayudante</h6>
                                     <div class="select">
                                         <select name="format" id="format" formControlName="fk_tbl_guardia_cedula">
                                             <option *ngFor="let c of guardias" [value]="c.cedula">{{c.nombre +'
@@ -86,8 +88,9 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <div class="form-group">
 
+                                    <div class="form-group">
+                                        <h6>Cantidad</h6>
                                         <input type="number" formControlName="cantidad_libras" class="form-control">
                                         <div class="alert__danger"
                                             *ngIf="cantidad_libras.invalid && (cantidad_libras.dirty ||  cantidad_libras.touched)">
@@ -95,6 +98,7 @@
                                                 La cantidad es requerida
                                             </div>
                                         </div> <br>
+                                        <h6>Número de huacales</h6>
                                         <input type="number" formControlName="numero_tinas" placeholder=""
                                             class="form-control">
                                         <div class="alert__danger"
@@ -103,7 +107,7 @@
                                                 El número de huacales es requerida
                                             </div>
                                         </div><br>
-
+                                        <h6>Ruta</h6>
                                         <input type="text" formControlName="ruta" class="form-control">
                                         <div class="alert__danger"
                                             *ngIf="ruta.invalid && (ruta.dirty ||  ruta.touched)">
@@ -111,6 +115,7 @@
                                                 La ruta es requerida
                                             </div>
                                         </div><br>
+                                        <h6>Observaciones</h6>
                                         <input type="text" formControlName="observasiones" class="form-control">
                                         <br>
                                     </div>

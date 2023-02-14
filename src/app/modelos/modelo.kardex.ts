@@ -8,5 +8,6 @@ export interface ModelKardexI {
     cliente: string,
     observacion: string,
     numero_acta: string,
-    usuario: string
+    usuario: string,
+    numero_tinas:string
 }

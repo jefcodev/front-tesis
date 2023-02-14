@@ -33,9 +33,10 @@
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" [routerLink]="['/dashboard/usuarios']"  [ngClass]="{'d-none':userLogeado=='Gerente'}">
+                    <a class="collapse-item" [routerLink]="['/dashboard/usuarios']"
+                        [ngClass]="{'d-none':userLogeado=='Gerente'}">
                         <span>Usuarios</span></a>
-                    <a class="collapse-item" [routerLink]="['/dashboard/cliente']" >
+                    <a class="collapse-item" [routerLink]="['/dashboard/cliente']">
                         <span>Clientes</span></a>
 
                     <a class="collapse-item" [routerLink]="['/dashboard/autoridad']">
@@ -52,7 +53,7 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1"
                 aria-expanded="true" aria-controls="collapsePages">
                 <i class="fas fa-fw fa-chart-area"></i>
-                
+
                 <span>Inventario</span>
             </a>
             <div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -60,8 +61,10 @@
                     <a class="collapse-item" [routerLink]="['/dashboard/compras']">
 
                         <span>Compras</span></a>
-                   
-                    <a class="collapse-item"    [ngClass]="{'d-none':userLogeado=='Gerente'}" [routerLink]="['/dashboard/recicladas']">
+                    <a class="collapse-item" [routerLink]="['/dashboard/devoluciones']">
+                        <span>Devoluciones</span></a>
+                    <a class="collapse-item" [ngClass]="{'d-none':userLogeado=='Gerente'}"
+                        [routerLink]="['/dashboard/recicladas']">
                         <span>Recicladas</span></a>
 
                 </div>
@@ -83,8 +86,8 @@
 
                         <span>Despacho</span></a> -->
                     <a class="collapse-item" [routerLink]="['/dashboard/prestamo']">
-                            <span>Prestamo</span></a>
-                    
+                        <span>Préstamo</span></a>
+
 
                 </div>
             </div>
@@ -188,7 +191,7 @@
                         </div>
                     </li>
 
-                    
+
 
                 </ul>
 
@@ -242,4 +245,3 @@
         </div>
     </div>
 </div>
-

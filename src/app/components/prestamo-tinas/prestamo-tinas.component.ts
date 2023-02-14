@@ -25,12 +25,14 @@ export class PrestamoTinasComponent implements OnInit {
     cliente: new FormControl(''),
     observacion: new FormControl(''),
     numero_acta: new FormControl(''),
-    usuario: new FormControl('')
+    usuario: new FormControl(''),
+    numero_tinas: new FormControl(''),
   });
 
   formDevolucion = new FormGroup({
     id_prestamo_tinas: new FormControl(''),
     fecha: new FormControl(new Date),
+    usuario: new FormControl("")
 
   });
 
@@ -57,13 +59,14 @@ export class PrestamoTinasComponent implements OnInit {
 
   constructor(private loginService: LoginService, private cookieService: CookieService, private prestamoTinasService: PrestamoTinasService,
     private clientesService: ClientesService, private dexServices: KardexService) { }
-
+  userLo: string = "";
   ngOnInit(): void {
     this.showAllPrestamo();
-    this.userLo
+
   }
-  userLo: string = "";
+
   definirUser() {
+    // alert("haciendo")
     this.loginService.getUser(localStorage.getItem('tokenIC'))
       .subscribe((data: any) => {
         this.userLo = data.rol
@@ -108,6 +111,7 @@ export class PrestamoTinasComponent implements OnInit {
     );
   }
   updatePrestamos(form: any) {
+    this.definirUser()
     if (this.formPrestamoTinas.valid) {
       this.prestamoTinasService.updatePrestamos(form).subscribe(data => {
         this.showModalMore('center', 'success', 'Prestamo actualizado correctamente', false, 1500);
@@ -121,9 +125,10 @@ export class PrestamoTinasComponent implements OnInit {
           cantidad: null,
           ayudante: "",
           cliente: form.fk_tbl_cliente_cedula,
-          observacion: "",
-          numero_acta: "",
+          observacion: form.observasiones,
+          numero_acta: form.numero_acta,
           usuario: this.userLo,
+          numero_tinas: form.numero_tinas
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
@@ -153,15 +158,27 @@ export class PrestamoTinasComponent implements OnInit {
 
 
   DevolverTinas(id_prestamo_tinas: any) {
-    this.formDevolucion.setValue({
-      id_prestamo_tinas: id_prestamo_tinas,
-      fecha: new Date
-    })
-    this.prestamoTinasService.saveDevolucion(this.formDevolucion.value).subscribe((data: any) => {
+    this.loginService.getUser(localStorage.getItem('tokenIC'))
+      .subscribe((datax: any) => {
+        alert()
+
+        this.formDevolucion.setValue({
+          id_prestamo_tinas: id_prestamo_tinas,
+          fecha: new Date,
+          usuario: datax.rol
+        })
+
+         this.prestamoTinasService.saveDevolucion(this.formDevolucion.value).subscribe((data: any) => {
       this.showModalMore('center', 'success', 'Devolución registrada con éxito', false, 1500);
       this.showAllPrestamo();
+     })
 
-    })
-    console.log(this.formDevolucion.value)
+      });
+    
+
+   
+
+   
+
   }
 }

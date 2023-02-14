@@ -20,7 +20,7 @@
                 </div>
             </div>
         </form>
-     <a (click)="exportPdf()" class="btn btn-danger btn-icon-split">
+        <a (click)="exportPdf()" class="btn btn-danger btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-file-pdf"></i>
             </span>
@@ -38,18 +38,16 @@
     <table class="table table-bordered table-hover bg-white" style="text-align: center;">
         <thead>
             <tr>
-
                 <th>Fecha</th>
                 <th>Movimiento</th>
                 <th>Acción</th>
                 <th>Cantidad</th>
-
                 <th>Ayudante</th>
                 <th>Cliente</th>
                 <th>Observación</th>
                 <th>Número de acta</th>
+                <th>Número de tinas</th>
                 <th>Usuario</th>
-
             </tr>
 
         </thead>
@@ -125,14 +123,16 @@
                     'definedColorDespacho':i.movimiento==='Despacho',
                     'definedColorPedidos':i.movimiento==='Pedido',
                     'definedColorRecicladas':i.movimiento==='Recicladas'}">
+                    {{i.numero_tinas}}
+                </td>
+                <td [ngClass]="{'definedColorCompra':i.movimiento==='Compra',
+                    'definedColorDevolucion':i.movimiento==='Devolución',
+                    'definedColorPrestamos':i.movimiento==='Préstamo',
+                    'definedColorDespacho':i.movimiento==='Despacho',
+                    'definedColorPedidos':i.movimiento==='Pedido',
+                    'definedColorRecicladas':i.movimiento==='Recicladas'}">
                     {{i.usuario}}
                 </td>
-
-
-
-
-
-
             </tr>
         </tbody>
     </table>

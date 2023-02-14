@@ -57,6 +57,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form [formGroup]="formDevolucionUpdate">
+                                        <h5>Cliente</h5>
                                         <div class="select">
                                             <select name="format" id="format"
                                                 formControlName="fk_tbl_prestamo_tinas_id">
@@ -77,6 +78,7 @@
                                             <!-- <input type="date" [ngModel]='fecha | date:"yyyy-MM-dd" '
                                                 (ngModelChange)='fecha=$event' 
                                                 formControlName="fecha" placeholder="asadda" class="form-control"> -->
+                                                <h5>Cantidad</h5>
                                             <input type="text" formControlName="cantidad" class="form-control">
                                             <div class="alert__danger"
                                                 *ngIf="cantidadUpdate.invalid && (cantidadUpdate.dirty ||  cantidadUpdate.touched)">
@@ -85,6 +87,7 @@
                                                 </div>
                                             </div>
                                             <br>
+                                            <h5>Observaciones</h5>
                                             <input type="text" formControlName="observacion" class="form-control">
                                             <br>
 

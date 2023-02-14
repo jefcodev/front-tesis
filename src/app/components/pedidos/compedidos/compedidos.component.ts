@@ -50,7 +50,8 @@ export class CompedidosComponent implements OnInit {
     cliente: new FormControl(''),
     observacion: new FormControl(''),
     numero_acta: new FormControl(''),
-    usuario: new FormControl('')
+    usuario: new FormControl(''),
+    numero_tinas:new FormControl(''),
   });
 
   clientes: ModelClientesI[] = [];
@@ -141,7 +142,7 @@ export class CompedidosComponent implements OnInit {
 
       // alert(totalLibras)
       let resultTinas: number;
-      let tinasFInales;
+      let tinasFInales=0;
 
       if (cantidadLibras < 3.7) {
 
@@ -195,6 +196,7 @@ export class CompedidosComponent implements OnInit {
           observacion: form.observacionesPrestamo,
           numero_acta: form.numero_acta,
           usuario: this.userLo,
+          numero_tinas:tinasFInales
         })
         console.log(this.formBitacora.value)
 
@@ -212,6 +214,7 @@ export class CompedidosComponent implements OnInit {
           observacion: form.observacionesPrestamo,
           numero_acta: form.numero_acta,
           usuario: this.userLo,
+          numero_tinas:tinasFInales
         })
         console.log(this.formBitacora.value)
 
@@ -229,6 +232,7 @@ export class CompedidosComponent implements OnInit {
           observacion: this.observacionesV,
           numero_acta: form.numero_acta,
           usuario: this.userLo,
+          numero_tinas:tinasFInales
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
@@ -348,6 +352,7 @@ export class CompedidosComponent implements OnInit {
             observacion: form.observasiones,
             numero_acta: "",
             usuario: this.userLo,
+           
           })
 
           this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {

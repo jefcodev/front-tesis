@@ -45,7 +45,8 @@ export class DetPedidosComponent implements OnInit {
     cliente: new FormControl(''),
     observacion: new FormControl(''),
     numero_acta: new FormControl(''),
-    usuario: new FormControl('')
+    usuario: new FormControl(''),
+    numero_tinas: new FormControl(''),
   });
 
 
@@ -239,7 +240,7 @@ export class DetPedidosComponent implements OnInit {
 
           // alert(totalLibras)
           let resultTinas: number;
-          let tinasFInales;
+          let tinasFInales=0;
 
           if (cantidadLibras < 3.7) {
 
@@ -285,6 +286,7 @@ export class DetPedidosComponent implements OnInit {
               observacion: form.observacionesPrestamo,
               numero_acta: form.numero_acta,
               usuario: this.userLo,
+              numero_tinas:tinasFInales
             })
             console.log(this.formBitacora.value)
 
@@ -302,6 +304,7 @@ export class DetPedidosComponent implements OnInit {
               observacion: pedido[0].observasiones,
               numero_acta: form.numero_acta,
               usuario: this.userLo,
+              numero_tinas:tinasFInales
             })
 
             this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {

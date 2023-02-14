@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form [formGroup]="formRecicladas">
-
+                                        <h5>Autoridad</h5>
                                         <div class="select">
                                             <select name="format" id="format" formControlName="fk_tbl_autoridades_id">
                                                 <option *ngFor="let c of autoridades" [value]="c.id">{{c.nombre +'
@@ -69,6 +69,7 @@
                                             </select>
 
                                         </div>
+                                        
                                         <div class="alert__danger"
                                             *ngIf="fk_tbl_autoridades_id.invalid && (fk_tbl_autoridades_id.dirty ||  fk_tbl_autoridades_id.touched)">
                                             <div class="container-error-message">
@@ -76,6 +77,7 @@
                                             </div>
                                         </div>
                                         <br>
+                                        <h5>Fecha</h5>
                                         <input type="date" [ngModel]='fecha | date:"yyyy-MM-dd" '
                                             (ngModelChange)='fecha=$event' name="Nombre Ingrediente"
                                             formControlName="fecha" placeholder="asadda" class="form-control">
@@ -86,9 +88,9 @@
                                             </div>
                                         </div>
                                         <br>
-
+                                        
                                         <div class="form-group">
-
+                                            <h5>Cantidad</h5>
                                             <input type="number" formControlName="cantidad" class="form-control">
                                             <div class="alert__danger"
                                                 *ngIf="cantidad.invalid && (cantidad.dirty ||  cantidad.touched)">
@@ -96,6 +98,7 @@
                                                     La cantidad es requerida
                                                 </div>
                                             </div><br>
+                                            <h5>Número de acta</h5>
                                             <input type="number" formControlName="numero_acta" placeholder=""
                                                 class="form-control">
                                             <div class="alert__danger"
@@ -104,7 +107,7 @@
                                                     El número de acta es requerida
                                                 </div>
                                             </div><br>
-
+                                            <h5>Observaciones</h5>
                                             <input type="text" formControlName="observacion" class="form-control"> <br>
                                         </div>
 

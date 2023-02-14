@@ -18,7 +18,7 @@ import { LoginService } from '../../servicios/login/login.service';
 })
 export class DetDespachoComponent implements OnInit {
 
-  
+
   despachos: ModelDespachoI[] = [];
   clientes: ModelClientesI[] = [];
   guardias: ModelGuardiasI[] = [];
@@ -39,7 +39,8 @@ export class DetDespachoComponent implements OnInit {
     cliente: new FormControl(''),
     observacion: new FormControl(''),
     numero_acta: new FormControl(''),
-    usuario: new FormControl('')
+    usuario: new FormControl(''),
+    numero_tinas: new FormControl('')
   });
 
 
@@ -133,6 +134,7 @@ export class DetDespachoComponent implements OnInit {
           observacion: form.observasiones,
           numero_acta: "",
           usuario: this.userLo,
+          numero_tinas: form.numero_tinas
         })
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
