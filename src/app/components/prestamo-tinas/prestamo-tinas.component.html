@@ -68,7 +68,10 @@
                                 </div>
                                 <div class="modal-body">
                                     <form [formGroup]="formPrestamoTinas">
+                                       
+                                        <h5>Cliente</h5>
                                         <div class="select">
+                                            
                                             <select name="format" id="format" formControlName="fk_tbl_cliente_cedula">
                                                 <option *ngFor="let c of clientes" [value]="c.cedula">{{c.nombre +'
                                                     '+c.apellido}}
@@ -83,6 +86,7 @@
                                             </div>
                                         </div>
                                         <br>
+                                        <h5>Fecha de entrega</h5>
                                         <div class="form-group">
                                             <input type="date" [ngModel]='fecha | date:"yyyy-MM-dd" '
                                                 (ngModelChange)='fecha=$event' formControlName="fecha_entrega"
@@ -93,6 +97,7 @@
                                                     La fecha de entrega es requerida
                                                 </div>
                                             </div><br>
+                                            <h5>Número de tinas</h5>
                                             <input type="number" formControlName="numero_tinas" class="form-control">
                                             <div class="alert__danger"
                                                 *ngIf="numero_tinas.invalid && (numero_tinas.dirty ||  numero_tinas.touched)">
@@ -100,6 +105,7 @@
                                                     El número de huacales es requerida
                                                 </div>
                                             </div> <br>
+                                            <h5>Número de acta</h5>
                                             <input type="text" formControlName="numero_acta" class="form-control">
                                             <div class="alert__danger"
                                                 *ngIf="numero_acta.invalid && (numero_acta.dirty ||  numero_acta.touched)">
@@ -107,6 +113,7 @@
                                                     El número de acta es requerido
                                                 </div>
                                             </div> <br>
+                                            <h5>Observaciones</h5>
                                             <input type="text" formControlName="observasiones" class="form-control">
                                             <br>
                                         </div>

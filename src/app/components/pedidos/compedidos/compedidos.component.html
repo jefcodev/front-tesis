@@ -127,13 +127,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Detalle</h5>
+                    <h2 class="modal-title">Detalle</h2>
                     <button type="button" class="close" (click)="closeModal()">
                         <span>&times;</span>
                     </button>
                 </div>
                 <form [formGroup]="formPedidoDetalle">
+                   
                     <div class="modal-body">
+                        
+                           <h5>Ayudante</h5>
+                        
                         <div style="width: 375px;" class="select">
                             <select name="format" id="format" formControlName="fk_tbl_guardia_cedula">
                                 <option *ngFor="let c of guardias" [value]="c.cedula">{{c.nombre +'
@@ -143,6 +147,9 @@
 
                         </div>
                         <br>
+                       
+                            <h5>Fecha de entrega</h5>
+                         
                         <div class="form-group">
                             <input style="width: 100%;" type="date" formControlName="fecha_entrega" placeholder=""
                                 class="form-control">
@@ -154,13 +161,14 @@
                         </div> -->
 
                         </div>
-
+                        <h5>Número de acta</h5>
                         <div class="form-group">
 
                             <input style="width: 100%;" type="text" name="Nombres Completos"
                                 formControlName="numero_acta" placeholder="Ingrese el número de acta"
                                 class="form-control">
                         </div>
+                        <h5>Observaciones</h5>
                         <div class="form-group">
 
                             <input style="width: 100%;" type="text" name="Nombres Completos"
@@ -171,9 +179,9 @@
                         </ng-content>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+                        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
                         <button type="button" class="btn btn-primary"
-                            (click)="crearDespachoPedido(formPedidoDetalle.value)">Submit</button>
+                            (click)="crearDespachoPedido(formPedidoDetalle.value)">Guardar</button>
                     </div>
                 </form>
             </div>

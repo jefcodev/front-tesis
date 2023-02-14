@@ -33,9 +33,9 @@
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" [routerLink]="['/dashboard/usuarios']">
+                    <a class="collapse-item" [routerLink]="['/dashboard/usuarios']"  [ngClass]="{'d-none':userLogeado=='Gerente'}">
                         <span>Usuarios</span></a>
-                    <a class="collapse-item" [routerLink]="['/dashboard/cliente']">
+                    <a class="collapse-item" [routerLink]="['/dashboard/cliente']" >
                         <span>Clientes</span></a>
 
                     <a class="collapse-item" [routerLink]="['/dashboard/autoridad']">
