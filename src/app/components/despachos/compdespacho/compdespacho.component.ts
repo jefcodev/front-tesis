@@ -77,6 +77,7 @@ export class CompdespachoComponent implements OnInit {
 
       },
       (error) => console.log(error)
+      
     );
   }
 

@@ -48,7 +48,6 @@ export class LoginPageComponent implements OnInit {
           if (data[0].count > 0) {
             this.tinasServices.getAllTinas().subscribe((datas: any) => {
 
-              // console.log(datas[0].stock)
               if (datas[0].stock < 100) {
                 if (numberPrestamos > 0 && numberPrestamos < 2) {
                   this.ShowModal('Información', 'Tiene ' + data[0].count + ' cliente que está retrasado en la entrega de los huacales. Además dispone menos de 100 huacales', 'info');

@@ -52,7 +52,6 @@ export class IngresoInsumosComponent implements OnInit {
     this.insumosService.getAllInsumos().subscribe(
       (insumos: any) => {
         this.insumos = insumos
-        console.log(this.insumos)
       },
       (error) => console.log(error)
     );
@@ -106,7 +105,6 @@ export class IngresoInsumosComponent implements OnInit {
     this.guardiaService.getAllGuards().subscribe(
       (guardias: any) => {
         this.guardias = guardias
-        console.log(this.guardias)
       },
       (error) => console.log(error)
     );

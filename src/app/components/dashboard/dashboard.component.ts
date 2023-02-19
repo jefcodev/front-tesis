@@ -33,8 +33,7 @@ export class DashboardComponent implements OnInit {
   public showUser() {
 
     this.loginService.getUser(localStorage.getItem('tokenIC')).subscribe((data: any) => {
-      // console.log("asdas")
-      console.log(data)
+      
       this.userLogeado = data.rol;
       // this.login=data;
 

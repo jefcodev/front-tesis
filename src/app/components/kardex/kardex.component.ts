@@ -194,7 +194,6 @@ export class KardexComponent implements OnInit {
   }
 
   search(value: any) {
-    console.log(value)
     this.formbusqueda.setValue({
       busqueda: value
     })
@@ -202,7 +201,6 @@ export class KardexComponent implements OnInit {
     this.dexServices.saveBitacoraBy(this.formbusqueda).subscribe(
       (kardex: any) => {
         this.kardex = kardex
-        console.log(kardex)
       },
       (error) => console.log(error)
     );

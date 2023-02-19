@@ -50,7 +50,6 @@ export class UsuariosComponent implements OnInit {
     this.userService.getAllUsuarios().subscribe(
       (usuarios: any) => {
         this.usuarios = usuarios
-        console.log(this.usuarios)
       },
       (error) => console.log(error)
     );

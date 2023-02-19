@@ -198,8 +198,6 @@ export class CompedidosComponent implements OnInit {
           usuario: this.userLo,
           numero_tinas:tinasFInales
         })
-        console.log(this.formBitacora.value)
-
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
           // alert("hizo a")
         })
@@ -216,7 +214,6 @@ export class CompedidosComponent implements OnInit {
           usuario: this.userLo,
           numero_tinas:tinasFInales
         })
-        console.log(this.formBitacora.value)
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
           // alert("hizo a")
@@ -333,7 +330,6 @@ export class CompedidosComponent implements OnInit {
           cantidad_libras_p: form.cantidad_libras
 
         })
-        console.log(this.formPedidoResult)
 
 
 

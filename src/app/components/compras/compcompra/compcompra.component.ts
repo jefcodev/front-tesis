@@ -60,7 +60,6 @@ export class CompcompraComponent implements OnInit {
     this.autoridadesServices.getAllAutoridades().subscribe(
       (autoridades: any) => {
         this.autoridades = autoridades
-        console.log(this.autoridades)
       },
       (error) => console.log(error)
     );
@@ -88,10 +87,6 @@ export class CompcompraComponent implements OnInit {
           usuario: this.userLo
         })
 
-
-
-        // });
-        // console.log(this.formBitacora)
 
         this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
         })

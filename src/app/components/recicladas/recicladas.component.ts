@@ -63,7 +63,6 @@ export class RecicladasComponent implements OnInit {
     this.recicladasServices.getAllRecicladas().subscribe(
       (recicladas: any) => {
         this.recicladas = recicladas
-        console.log(this.recicladas)
       },
       (error) => console.log(error)
     );
@@ -79,7 +78,6 @@ export class RecicladasComponent implements OnInit {
       observacion: observacion,
       fk_tbl_autoridades_id: null
     })
-    console.log(this.formRecicladas)
     this.showAllAutoridades()
 
   }
@@ -97,7 +95,7 @@ export class RecicladasComponent implements OnInit {
 
 
   updateReciclados(form: any) {
-    console.log(form)
+    
     if (this.formRecicladas.valid) {
       this.recicladasServices.updateRecicladas(form).subscribe(data => {
         this.showModalMore('center', 'success', 'Reciclado actualizada correctamente', false, 1500);

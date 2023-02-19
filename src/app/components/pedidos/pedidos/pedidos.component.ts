@@ -116,7 +116,6 @@ export class PedidosComponent implements OnInit {
       observasiones: observaciones,
       fk_tbl_cliente_cedula: null
     })
-    console.log("Imprimiendo ", this.formPedidoA.valueChanges)
 
     this.showAllClients();
   }

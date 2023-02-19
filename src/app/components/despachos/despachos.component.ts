@@ -82,7 +82,6 @@ export class DespachosComponent implements OnInit {
       fk_tbl_cliente_cedula: null,
       fk_tbl_guardia_cedula: null
     })
-    console.log("Imprimiendo ", this.formDespacho)
 
     this.showAllClients();
     this.showAllGuards();
@@ -92,7 +91,7 @@ export class DespachosComponent implements OnInit {
     this.despachoServicio.getAllDespachos().subscribe(
       (despachos: any) => {
         this.despachos = despachos
-        console.log(this.despachos)
+      
       },
       (error) => console.log(error)
     );

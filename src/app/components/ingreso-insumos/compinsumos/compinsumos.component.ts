@@ -53,7 +53,6 @@ export class CompinsumosComponent implements OnInit {
     this.guardiasservices.getAllGuards().subscribe(
       (guardias: any) => {
         this.guardias = guardias
-        console.log(this.guardias)
       },
       (error) => console.log(error)
     );

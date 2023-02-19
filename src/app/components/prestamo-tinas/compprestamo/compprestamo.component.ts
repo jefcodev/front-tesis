@@ -66,6 +66,7 @@ export class CompprestamoComponent implements OnInit {
       (clientes: any) => {
         this.clientes = clientes
 
+        
       },
       (error) => console.log(error)
     );

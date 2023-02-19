@@ -63,7 +63,7 @@ export class ComprasComponent implements OnInit {
     this.autoridadesServices.getAllAutoridades().subscribe(
       (autoridades: any) => {
         this.autoridades = autoridades
-        console.log(this.autoridades)
+       
       },
       (error) => console.log(error)
     );
@@ -72,7 +72,6 @@ export class ComprasComponent implements OnInit {
     this.comprasServices.getAllCompras().subscribe(
       (compras: any) => {
         this.compras = compras
-        console.log(this.compras)
       },
       (error) => console.log(error)
     );
@@ -99,8 +98,6 @@ export class ComprasComponent implements OnInit {
       this.fe = fecha;
     })
     this.cd.detectChanges();
-
-    console.log("Imprimiendo ", this.formEditCompras.value)
 
     this.showAllAutoridades();
   }

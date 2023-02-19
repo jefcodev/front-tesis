@@ -54,14 +54,14 @@ export class ClientesComponent implements OnInit {
     this.clientesService.getAllClients().subscribe(
       (clientes: any) => {
         this.clientes = clientes
-        console.log(this.clientes)
+       
       },
       (error) => console.log(error)
     );
   }
   public crearClient(form: any) {
     if (this.nClienteForm.valid) {
-      console.log(form)
+     
       this.clientesService.saveClient(form).subscribe(data => {
         this.showAllClients();
 
@@ -72,12 +72,12 @@ export class ClientesComponent implements OnInit {
       this.nClienteForm.reset;
     } else {
       this.ShowModal('Cliente', 'Error al registrar cliente', 'error');
-      console.log(this.nClienteForm.valid)
+     
     }
 
   }
   public updateClient(form: any) {
-    console.log(this.nClienteFormA.valid)
+    
     if (this.nClienteFormA.valid) {
       this.clientesService.updateClient(form).subscribe(data => {
         this.showModalMore('center', 'success', 'Cliente actualizado correctamente', false, 1500);
@@ -108,7 +108,6 @@ export class ClientesComponent implements OnInit {
       telefono: telefono
     })
     this.cedulaAux = cedula;
-    console.log(cedula)
 
   }
 

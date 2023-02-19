@@ -76,7 +76,6 @@ export class PrestamoTinasComponent implements OnInit {
     this.prestamoTinasService.getAllPrestamos().subscribe(
       (prestamoTinas: any) => {
         this.prestamoTinas = prestamoTinas
-        console.log(this.prestamoTinas)
       },
       (error) => console.log(error)
     );

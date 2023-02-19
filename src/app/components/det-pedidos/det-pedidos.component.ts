@@ -110,8 +110,7 @@ export class DetPedidosComponent implements OnInit {
       observasiones: observaciones,
       fk_tbl_cliente_cedula: null
     })
-    console.log("Imprimiendo ", this.formPedidoA.valueChanges)
-
+    
     this.showAllClients();
   }
 
@@ -227,10 +226,6 @@ export class DetPedidosComponent implements OnInit {
     if (this.formPedidoDetalle.valid) {
       this.despachosService.getById(this.idpedidoV).subscribe(
         (pedido: any) => {
-          // console.log("asda")
-          // console.log(pedido)
-          // console.log(pedido[0].num_pollos)
-          // console.log(pedido[0].cantidad_libras_p)
 
           let cantidadLibras = parseFloat(pedido[0].cantidad_libras_p)
           let numeroPollos = parseFloat(pedido[0].num_pollos)
@@ -288,7 +283,6 @@ export class DetPedidosComponent implements OnInit {
               usuario: this.userLo,
               numero_tinas:tinasFInales
             })
-            console.log(this.formBitacora.value)
 
             this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
               // alert("hizo a")

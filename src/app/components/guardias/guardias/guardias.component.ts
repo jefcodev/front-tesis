@@ -40,7 +40,6 @@ export class GuardiasComponent implements OnInit {
     this.guardiaService.getAllGuards().subscribe(
       (guardias: any) => {
         this.guardias = guardias
-        console.log(this.guardias)
       },
       (error) => console.log(error)
     );
@@ -82,7 +81,6 @@ export class GuardiasComponent implements OnInit {
 
     })
     this.cedulaAux = cedula;
-    console.log(cedula)
   }
 
   public updateGuards(form: any) {

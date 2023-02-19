@@ -68,7 +68,6 @@ export class DevolucionesComponent implements OnInit {
     this.devolucionesServices.getAllDevoluciones().subscribe(
       (devoluciones: any) => {
         this.devoluciones = devoluciones
-        console.log(this.devoluciones)
       },
       (error) => console.log(error)
     );
@@ -78,14 +77,12 @@ export class DevolucionesComponent implements OnInit {
     this.prestamoTinasServices.getAllPrestamoss().subscribe(
       (prestamos: any) => {
         this.prestamos = prestamos
-        console.log(this.prestamos)
       },
       (error) => console.log(error)
     );
   }
 
   public crearDevolucion(form: any) {
-    console.log(form)
     if (this.formDevolucion.valid) {
       this.devolucionesServices.saveDevoluciones(form).subscribe(data => {
         this.showAllDevoluciones();

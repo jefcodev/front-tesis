@@ -34,7 +34,7 @@ export class AutoridadesComponent implements OnInit {
     this.autoridadesServices.getAllAutoridades().subscribe(
       (autoridades: any) => {
         this.autoridades = autoridades
-        console.log(this.autoridades)
+       
       },
       (error) => console.log(error)
     );
@@ -59,12 +59,11 @@ export class AutoridadesComponent implements OnInit {
       apellido: apellido
 
     })
-    // this.cedulaAux = cedula;
-    console.log(id)
+  
   }
 
   public updateAutoridades(form: any) {
-    console.log(form)
+ 
     if (this.nAutoridadForm.valid) {
       this.autoridadesServices.updateAutoridad(form).subscribe(data => {
         this.showAllAutoridades();

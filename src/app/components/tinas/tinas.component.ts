@@ -21,7 +21,7 @@ export class TinasComponent implements OnInit {
     this.tinasServices.getAllTinas().subscribe(
       (tinas: any) => {
         this.tinas = tinas
-        console.log(this.tinas)
+       
       },
       (error) => console.log(error)
     );
