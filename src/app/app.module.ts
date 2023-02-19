@@ -1,6 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 // import { FormsModule } from '@angular/forms';
+
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,6 +47,7 @@ import { DetDespachoComponent } from './components/det-despacho/det-despacho.com
 // import { MatMomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 
 
+registerLocaleData(localeEs);
 
 @NgModule({
   declarations: [
@@ -81,12 +85,12 @@ import { DetDespachoComponent } from './components/det-despacho/det-despacho.com
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    CommonModule
+    
   ],
 
-  providers: [
-
-  ],
+  providers: [{ provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

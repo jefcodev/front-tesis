@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { ModelRecicladasI } from '../../modelos/modelo.recicladas';
 import { RecicladasService } from '../../servicios/recicladas/recicladas.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 import { KardexService } from '../../servicios/kardex/kardex.service';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from '../../servicios/login/login.service';
+
+
 
 @Component({
   selector: 'app-recicladas',

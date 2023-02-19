@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 // Generar PDF
 import  jsPDF from 'jspdf';
 import * as FileSaver from 'file-saver';
- 
+ // Generar Excel
 import * as XLSX from 'xlsx';
 
 
@@ -59,6 +59,7 @@ export class KardexComponent implements OnInit {
       { field: 'cliente', header: 'Cliente' },
       { field: 'observacion', header: 'Observación' },
       { field: 'numero_acta', header: '# Acta' },
+      { field: 'numero_tinas', header: '# Huacales' },
       { field: 'usuario', header: 'Usuario' },
 
     ];
@@ -116,7 +117,7 @@ export class KardexComponent implements OnInit {
     ID_Bitácora: any; Fecha_Actual: any; Acción: any;
     // Generar PDF
     Ayudante: any; Cliente: any; Observación: any; Número_de_acta: any; Usuario: any;
-    Movimiento:any;
+    Movimiento:any; Número_de_tinas: any;
   }[] = [];
   this.personasFiltradas.forEach(registro => {
     kardex.push({
@@ -128,6 +129,7 @@ export class KardexComponent implements OnInit {
       Cliente: registro.cliente,
       Observación: registro.observacion,
       Número_de_acta: registro.numero_acta,
+      Número_de_tinas : registro.numero_tinas,
       Usuario: registro.usuario
     });
   });
@@ -169,14 +171,19 @@ export class KardexComponent implements OnInit {
 
 
   filtrarPersonas(event: any) {
+    console.log(this.kardex);
+    
     const texto = (event.target as HTMLInputElement).value;
 
     this.personasFiltradas = this.kardex.filter(kardex => {
+ 
 
-
-      return kardex.cliente.toLowerCase().includes(texto.toLowerCase()) ||
-      kardex.ayudante.toLowerCase().includes(texto.toLowerCase()) || kardex.observacion.toLowerCase().includes(texto.toLowerCase())
-      || kardex.movimiento.toLowerCase().includes(texto.toLowerCase());
+      return  (
+        (kardex.cliente?.toLowerCase() ?? '').includes(texto.toLowerCase()) ||
+        (kardex.ayudante?.toLowerCase() ?? '').includes(texto.toLowerCase()) ||
+        (kardex.observacion?.toLowerCase() ?? '').includes(texto.toLowerCase()) ||
+        (kardex.movimiento?.toLowerCase() ?? '').includes(texto.toLowerCase())
+      )
 
     });
   }

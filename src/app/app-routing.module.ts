@@ -80,11 +80,6 @@ const routes: Routes = [
   { path: "login", component: LoginPageComponent },
   { path: "modal", component: ModalpedidoComponent },
 
-
-
-
-
-
 ];
 
 @NgModule({

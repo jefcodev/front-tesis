@@ -15,7 +15,6 @@
 
                 <th>Número de huacales</th>
 
-                <th>Observación</th>
                 <th>Número de acta</th>
                 <th>Cliente</th>
 
@@ -29,18 +28,16 @@
                     {{i.id_prestamo_tinas}}
                 </td>
                 <td>
-                    {{i.fecha_prestamo | date:"yyyy-MM-dd"}}
+                    {{i.fecha_prestamo | date:'dd-MMM-yyyy': 'UTC'}}
                 </td>
                 <td>
-                    {{i.fecha_entrega | date:"yyyy-MM-dd"}}
+                    {{i.fecha_entrega | date:'dd-MMM-yyyy': 'UTC'}}
                 </td>
                 <td>
                     {{i.numero_tinas}}
                 </td>
 
-                <td>
-                    {{i.observasiones}}
-                </td>
+                
                 <td>
                     {{i.numero_acta}}
                 </td>
@@ -48,10 +45,10 @@
                     {{i.cliente}}
                 </td>
                 <td class="d-flex justify-content-center">
-                    <a class="btn btn-success" data-toggle="modal" data-target="#editarPedido"
+                    <!-- <a class="btn btn-success" data-toggle="modal" data-target="#editarPedido"
                         (click)="getDataPrestamos(i.id_prestamo_tinas,i.fecha_prestamo,i.fecha_entrega,i.numero_tinas,i.observasiones,i.numero_acta,i.cliente)">
                         <i class="fas fa-edit"></i>
-                    </a>
+                    </a> -->
                     <a class="btn btn-secondary"
                         (click)="DevolverTinas(i.id_prestamo_tinas)">
                         <i class="fas fa-edit"></i>Devolver
