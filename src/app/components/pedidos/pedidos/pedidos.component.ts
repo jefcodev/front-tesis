@@ -23,15 +23,18 @@ export class PedidosComponent implements OnInit {
   changeActiveA() {
     this.activoA = true;
     this.activoB = false;
+    this.activoC = false;
 
   }
   changeActiveB() {
     this.activoA = false;
     this.activoB = true;
+    this.activoC = false;
 
   }
   changeActiveC() {
-   
+    this.activoA = false;
+    this.activoB = false;
     this.activoC = true;
 
   }
@@ -77,7 +80,7 @@ export class PedidosComponent implements OnInit {
     // this.showAllClients();
     // this.fecha="2000-03-20";
     this.definirUser();
-    this.activoC = true;
+    this.activoA = true;
   }
   userLo: string = "";
   definirUser() {

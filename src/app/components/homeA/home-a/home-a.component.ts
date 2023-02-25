@@ -29,6 +29,16 @@ export class HomeAComponent implements OnInit {
     this.showAll()
 
   }
+
+
+  A: boolean = false;
+  B: boolean = false;
+
+
+  numTinas() {
+
+  }
+
   showAllPrestamosHome() {
     this.prestamosTinasServices.getAllPrestamoss().subscribe(
       (prestamosHome: any) => {
@@ -42,6 +52,17 @@ export class HomeAComponent implements OnInit {
     this.tinasServices.getAllTinas().subscribe(
       (tinas: any) => {
         this.stock = tinas[0]['stock'];
+        if (tinas[0]['stock'] < 10) {
+          alert("MK")
+          this.A = true;
+          this.B = false;
+        } else {
+          this.A = false;
+          this.B = true;
+
+        }
+
+
       },
       (error) => console.log(error)
     );

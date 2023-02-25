@@ -13,6 +13,7 @@ import { LoginService } from '../../../servicios/login/login.service';
 // import { NgbModa } from '@ng-bootstrap/ng-bootstrap'
 import { GuardiasService } from '../../../servicios/guardias/guardias.service';
 import { ModelGuardiasI } from 'src/app/modelos/modelo.guardias';
+import { TinasService } from '../../../servicios/tinas/tinas.service';
 
 @Component({
   selector: 'app-compedidos',
@@ -24,6 +25,7 @@ export class CompedidosComponent implements OnInit {
 
   showModal = false;
   guardias: ModelGuardiasI[] = [];
+  clientes: ModelClientesI[] = [];
 
   closeModal() {
     this.showModal = false;
@@ -38,8 +40,8 @@ export class CompedidosComponent implements OnInit {
   observacionesV: string = "";
 
 
-
   accion: string = "";
+
 
   formBitacora = new FormGroup({
     fecha_actual: new FormControl(''),
@@ -51,12 +53,19 @@ export class CompedidosComponent implements OnInit {
     observacion: new FormControl(''),
     numero_acta: new FormControl(''),
     usuario: new FormControl(''),
-    numero_tinas:new FormControl(''),
+    numero_tinas: new FormControl(''),
   });
 
-  clientes: ModelClientesI[] = [];
-  constructor(private guardiasService: GuardiasService, private loginService: LoginService, private cookieService: CookieService, private clientesService: ClientesService, private pedidosService: PedidosService, private router: Router,
-    private pedidosComponent: PedidosComponent, private dexServices: KardexService) { }
+
+  constructor(private guardiasService: GuardiasService,
+    private loginService: LoginService,
+    private cookieService: CookieService,
+    private clientesService: ClientesService,
+    private pedidosService: PedidosService,
+    private router: Router,
+    private servicesTinas: TinasService,
+    private pedidosComponent: PedidosComponent,
+    private dexServices: KardexService) { }
 
   formPedido = new FormGroup({
     fecha_pedido: new FormControl(new Date),
@@ -68,9 +77,7 @@ export class CompedidosComponent implements OnInit {
     accion: new FormControl('', [Validators.required]),
     numero_pollos: new FormControl('', [Validators.required]),
 
-    // fk_tbl_guardia_cedula: new FormControl('', [Validators.required]),
-    // numero_acta: new FormControl('', [Validators.required]),
-    // observacionesPrestamo: new FormControl('', [Validators.required])
+
   })
 
   formPedidoFinal = new FormGroup({
@@ -128,46 +135,26 @@ export class CompedidosComponent implements OnInit {
       (error) => console.log(error)
     );
   }
+  //Método para crear le pedido-despacho
   crearDespachoPedido(form: any) {
 
     if (this.formPedidoDetalle.valid) {
-
-
       let cantidadLibras = parseFloat(this.cantidad_librasV)
       let numeroPollos = parseFloat(this.cantidadPollosV)
       let totalLibras = numeroPollos * cantidadLibras;
-
-
       totalLibras = parseFloat(totalLibras.toFixed(2))
-
-      // alert(totalLibras)
       let resultTinas: number;
-      let tinasFInales=0;
-
+      let tinasFInales = 0;
       if (cantidadLibras < 3.7) {
-
         resultTinas = numeroPollos / 15;
         tinasFInales = Math.ceil(resultTinas);
-
-
-        //15
       } else if (cantidadLibras > 3.7 && cantidadLibras < 5.4) {
-
-        // 12
         resultTinas = numeroPollos / 12;
         tinasFInales = Math.ceil(resultTinas);
-
-
       } else if (cantidadLibras > 5.4) {
-
-        // 10
         resultTinas = numeroPollos / 10;
         tinasFInales = Math.ceil(resultTinas);
-
-
       }
-      // let a = (resultTinas);
-
       this.formPedidoFinal.setValue({
         fecha_pedido: this.fecha_pedidoV,
         fecha_entrega: form.fecha_entrega,
@@ -182,63 +169,131 @@ export class CompedidosComponent implements OnInit {
         numero_tinas: tinasFInales
       })
 
-      this.pedidosService.saveOrders(this.formPedidoFinal.value).subscribe(data => {
-        this.router.navigateByUrl("/dashboard/pedido/detpedido");
-        this.pedidosComponent.showAllOrders();
+      this.servicesTinas.getAllTinas().subscribe((data: any) => {
+        if (data[0].stock>tinasFInales) {
+          this.pedidosService.saveOrders(this.formPedidoFinal.value).subscribe(data => {
+        
+            //Inserta en el kardex (Pedido-Crear)
+            this.pedidosComponent.showAllOrders();
+            this.formBitacora.setValue({
+              fecha_actual: new Date,
+              movimiento: "Pedido",
+              accion: "Crear",
+              cantidad: totalLibras,
+              ayudante: form.fk_tbl_guardia_cedula,
+              cliente: this.fk_tbl_cliente_cedulaV,
+              observacion: form.observacionesPrestamo,
+              numero_acta: form.numero_acta,
+              usuario: this.userLo,
+              numero_tinas: tinasFInales
+            })
+            this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+            })
+            //Inserta en el kardex (Despacho-Préstamo)
+            this.formBitacora.setValue({
+              fecha_actual: new Date,
+              movimiento: "Préstamo",
+              accion: "Crear",
+              cantidad: totalLibras,
+              ayudante: form.fk_tbl_guardia_cedula,
+              cliente: this.fk_tbl_cliente_cedulaV,
+              observacion: form.observacionesPrestamo,
+              numero_acta: form.numero_acta,
+              usuario: this.userLo,
+              numero_tinas: tinasFInales
+            })
 
-        this.formBitacora.setValue({
-          fecha_actual: new Date,
-          movimiento: "Pedido",
-          accion: "Crear",
-          cantidad: totalLibras,
-          ayudante: form.fk_tbl_guardia_cedula,
-          cliente: this.fk_tbl_cliente_cedulaV,
-          observacion: form.observacionesPrestamo,
-          numero_acta: form.numero_acta,
-          usuario: this.userLo,
-          numero_tinas:tinasFInales
-        })
-        this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
-          // alert("hizo a")
-        })
+            this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+            })
+            //Inserta en el kardex (Despacho-Crear)
+            this.formBitacora.setValue({
+              fecha_actual: new Date,
+              movimiento: "Despacho",
+              accion: "Crear",
+              cantidad: totalLibras,
+              ayudante: form.fk_tbl_guardia_cedula,
+              cliente: this.fk_tbl_cliente_cedulaV,
+              observacion: this.observacionesV,
+              numero_acta: form.numero_acta,
+              usuario: this.userLo,
+              numero_tinas: tinasFInales
+            })
+            this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+            })
+            this.showModal = false;
+            this.router.navigateByUrl("/dashboard/prestamo");
+            this.showModalMore('center', 'success', 'Detalle registrado exitosamente', false, 2000);
+          })
 
-        this.formBitacora.setValue({
-          fecha_actual: new Date,
-          movimiento: "Préstamo",
-          accion: "Crear",
-          cantidad: totalLibras,
-          ayudante: form.fk_tbl_guardia_cedula,
-          cliente: this.fk_tbl_cliente_cedulaV,
-          observacion: form.observacionesPrestamo,
-          numero_acta: form.numero_acta,
-          usuario: this.userLo,
-          numero_tinas:tinasFInales
-        })
+        } else {
+         
+          this.formPedidoFinal.setValue({
+            fecha_pedido: this.fecha_pedidoV,
+            fecha_entrega: form.fecha_entrega,
+            cantidad_libras: totalLibras,
+            ruta: this.rutaV,
+            observasiones: this.observacionesV,
+            fk_tbl_cliente_cedula: this.fk_tbl_cliente_cedulaV,
+            accion: "pendiente",
+            fk_tbl_guardia_cedula: form.fk_tbl_guardia_cedula,
+            numero_acta: form.numero_acta,
+            observacionesPrestamo: form.observacionesPrestamo,
+            numero_tinas: tinasFInales
+          })
+          this.pedidosService.saveOrders(this.formPedidoFinal.value).subscribe(data => {
+            
+          // this.showModalMore('center', 'info', 'El número huacales es insuficiente para realizar el despacho. Agregado a pendientes', false, 4000);
+            
+         
+            //Inserta en el kardex (Pedido-Crear)
+            // console.log("asda ad  ad ad d das das ")
+            // this.pedidosComponent.showAllOrders();
+            this.formBitacora.setValue({
+              fecha_actual: new Date,
+              movimiento: "Pedido pendiente",
+              accion: "Crear",
+              cantidad: totalLibras,
+              ayudante: form.fk_tbl_guardia_cedula,
+              cliente: this.fk_tbl_cliente_cedulaV,
+              observacion: form.observacionesPrestamo,
+              numero_acta: form.numero_acta,
+              usuario: this.userLo,
+              numero_tinas: tinasFInales
+            })
+            this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+            })
 
-        this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
-          // alert("hizo a")
-        })
+            this.formBitacora.setValue({
+              fecha_actual: new Date,
+              movimiento: "Despacho",
+              accion: "Crear",
+              cantidad: totalLibras,
+              ayudante: form.fk_tbl_guardia_cedula,
+              cliente: this.fk_tbl_cliente_cedulaV,
+              observacion: form.observacionesPrestamo,
+              numero_acta: form.numero_acta,
+              usuario: this.userLo,
+              numero_tinas: tinasFInales
+            })
+            this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
+            })
+            this.showModal = false;
+            Swal.fire({
+              title: 'El número de huacales es insuficiente para realizar el despacho. Agregado a pendientes ',
+              showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+              },
+              hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+              }
+            })
+            this.router.navigateByUrl("/dashboard/pedido/pendiente");
+          })
+         
+        }
 
-        this.formBitacora.setValue({
-          fecha_actual: new Date,
-          movimiento: "Despacho",
-          accion: "Crear",
-          cantidad: totalLibras,
-          ayudante: form.fk_tbl_guardia_cedula,
-          cliente: this.fk_tbl_cliente_cedulaV,
-          observacion: this.observacionesV,
-          numero_acta: form.numero_acta,
-          usuario: this.userLo,
-          numero_tinas:tinasFInales
-        })
-
-        this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {
-        })
-
-
-        this.showModal = false;
-        this.showModalMore('center', 'success', 'Detalle registrado exitosamente', false, 2000);
       })
+
 
 
 
@@ -248,7 +303,7 @@ export class CompedidosComponent implements OnInit {
     }
 
   }
-
+  //metodo para crear solo el pedido
   createPedido(form: any) {
     let numeroPollos = parseFloat(form.cantidad_libras)
     let cantidadLibras = parseFloat(form.numero_pollos)
@@ -348,7 +403,7 @@ export class CompedidosComponent implements OnInit {
             observacion: form.observasiones,
             numero_acta: "",
             usuario: this.userLo,
-           
+
           })
 
           this.dexServices.saveBitacora(this.formBitacora.value).subscribe(data => {

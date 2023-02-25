@@ -1,0 +1,91 @@
+<table class="table table-bordered table-hover bg-white" style="text-align: center;">
+    <thead>
+        <tr>
+
+            <th>ID</th>
+            <th>Fecha pedido</th>
+            <th>Fecha entrega</th>
+            <th>Cantidad en libras</th>
+            <th>Ruta</th>
+            <th>Observaciones</th>
+            <th>Cliente</th>
+            <th>Opciones</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr *ngFor="let i of orders">
+            <td>
+
+                {{i.id_pedido}}
+            </td>
+            <td>
+                {{i.fecha_pedido | date:'dd-MMM-yyyy':'UTC'}}
+            </td>
+            <td>
+                {{i.fecha_entrega | date:'dd-MMM-yyyy': 'UTC'}}
+            </td>
+            <td>
+                {{i.cantidad_libras}}
+            </td>
+            <td>
+                {{i.ruta}}
+            </td>
+            <td>
+                {{i.observasiones}}
+            </td>
+            <td>
+                {{i.client}}
+            </td>
+            <td class="d-flex justify-content-center">
+
+                <a class="btn btn-primary" data-toggle="modal" data-target="#editarPedido"
+                    (click)="getDataPedido(i.id_pedido)">
+                    <i class="fas fa-car"> Despachar</i>
+                </a>
+
+                <div class="modal fade" id="editarPedido" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Despacho</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form [formGroup]="formPendiente">
+                                    <div class="form-group">
+                                        <label for="">Fecha de entrega</label>
+                                        <input type="date" formControlName="fecha_entrega" placeholder=""
+                                            class="form-control">
+                                        <!-- <div class="alert__danger"
+                                            *ngIf="fecha_entrega.invalid && (fecha_entrega.dirty || fecha_entrega.touched)">
+                                            <div class="container-error-message">
+                                                La fecha de entrega es requerida
+                                            </div>
+                                        </div><br> -->
+
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Cerrar</button>
+                                        <button type="button" class="btn btn-primary"
+                                            (click)="despecharPedidopendiente(formPendiente.value)"
+                                            data-dismiss="modal">Despachar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+
+
+        </tr>
+    </tbody>
+</table>

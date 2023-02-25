@@ -8,11 +8,15 @@ import { environment } from 'src/environments/environment';
 })
 export class PedidosService {
 
-  url = environment.base_url; 
+  url = environment.base_url;
   constructor(private http: HttpClient) { }
 
   getAllOrders() {
     let direccion = this.url + "pedidos";
+    return this.http.get(direccion);
+  }
+  getAllPendientes() {
+    let direccion = this.url + "pendientes";
     return this.http.get(direccion);
   }
   getCountOrders() {
@@ -36,6 +40,15 @@ export class PedidosService {
   }
   getnumTinasP(id_pedido: any) {
     let direccion = this.url + "gettinasp/" + id_pedido;
+    return this.http.get(direccion);
+  }
+  despacharPendiente(body: any) {
+    let direccion = this.url + "desPedido/" + body.id_pedido;
+    return this.http.post(direccion, body);
+  }
+
+  getDespacho(id_pedido: any) {
+    let direccion = this.url + "des/" + id_pedido;
     return this.http.get(direccion);
   }
 }

@@ -53,7 +53,7 @@ export class LoginPageComponent implements OnInit {
                   this.ShowModal('Información', 'Tiene ' + data[0].count + ' cliente que está retrasado en la entrega de los huacales. Además dispone menos de 100 huacales', 'info');
 
                 } else if (numberPrestamos > 1) {
-                  this.ShowModal('Información', 'Tiene ' + data[0].count + ' clientes que están retrasados en la entrega de los huacales. Además dispone menos de 100 huacales /n  asdasdad', 'info');
+                  this.ShowModal('Información', 'Tiene ' + data[0].count + ' clientes que están retrasados en la entrega de los huacales. Además dispone menos de 100 huacales', 'info');
 
                 }
 

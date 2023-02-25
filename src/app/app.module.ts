@@ -38,6 +38,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ModalpedidoComponent } from './components/modalpedido/modalpedido.component';
 import { DetPedidosComponent } from './components/det-pedidos/det-pedidos.component';
 import { DetDespachoComponent } from './components/det-despacho/det-despacho.component';
+import { PendienteComponent } from './components/pendiente/pendiente.component';
 // import {
 //   MatDatepickerModule,
 //   DateAdapter,
@@ -77,6 +78,7 @@ registerLocaleData(localeEs);
     ModalpedidoComponent,
     DetPedidosComponent,
     DetDespachoComponent,
+    PendienteComponent,
     // CommonModule
   ],
   imports: [

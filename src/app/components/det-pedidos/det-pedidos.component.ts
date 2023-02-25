@@ -99,9 +99,7 @@ export class DetPedidosComponent implements OnInit {
         this.orders = orders;
         this.fechaOriginal = new Date(orders.fecha_actual)
         this.fechaOriginal.setHours(this.fechaOriginal.getHours() + 5);
-        console.log(orders)
-
-      },
+          },
       (error) => console.log(error)
     );
   }

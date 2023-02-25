@@ -159,7 +159,7 @@ export class PrestamoTinasComponent implements OnInit {
   DevolverTinas(id_prestamo_tinas: any) {
     this.loginService.getUser(localStorage.getItem('tokenIC'))
       .subscribe((datax: any) => {
-        alert()
+        // alert()
 
         this.formDevolucion.setValue({
           id_prestamo_tinas: id_prestamo_tinas,

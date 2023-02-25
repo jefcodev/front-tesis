@@ -28,6 +28,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ModalpedidoComponent } from './components/modalpedido/modalpedido.component';
 import { DetPedidosComponent } from './components/det-pedidos/det-pedidos.component';
 import { DetDespachoComponent } from './components/det-despacho/det-despacho.component';
+import { PendienteComponent } from './components/pendiente/pendiente.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "dashboard/homeA", pathMatch: "full" },
@@ -72,7 +73,8 @@ const routes: Routes = [
         path: "pedido", component: PedidosComponent, children: [
           { path: "compedido", component: CompedidosComponent },
           { path: "detpedido", component: DetPedidosComponent },
-          { path: "detdespacho", component: DetDespachoComponent }
+          { path: "detdespacho", component: DetDespachoComponent },
+          { path: "pendiente", component: PendienteComponent }
         ]
       }
     ], canActivate: [UserGuardGuard]

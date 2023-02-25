@@ -18,6 +18,10 @@
                 <a class="nav-link" [ngClass]="{'active':activoB==true}"
                     [routerLink]="['/dashboard/pedido/detdespacho']">Despachos</a>
             </li>
+            <li class="nav-item" (click)="changeActiveC()">
+                <a class="nav-link" [ngClass]="{'active':activoC==true}"
+                    [routerLink]="['/dashboard/pedido/pendiente']">Pendientes</a>
+            </li>
         </ul>
     <!-- </div> -->
     <br>
